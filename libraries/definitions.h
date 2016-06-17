@@ -2,6 +2,9 @@
  * This file must contain all definitions concerning general configuration of the game.
  */
 
+#ifndef _DEFINITIONS_H_
+#define _DEFINITIONS_H_
+
 /* ship configurations */
 #define SUBMARINE 4 // 1 slot
 #define BATTLESHIP 3 // 4 slot
@@ -17,6 +20,14 @@
 #define WATER 'X'
 #define EMPTY '.'
 
+/* OS configurations */
+#ifdef __unix__
+  #define CLEAR "clear"
+#elif defined(_WIN32) || defined(WIN32)
+  #define CLEAR "cls"
+#endif
+
+#define VERSION 1.0
 /* game types */
 typedef struct {
     int id;
@@ -32,6 +43,8 @@ typedef struct {
 
 typedef struct Players {
     char name[30];
-    char MAP[MAP_SIZE][MAP_SIZE];
+    char map[MAP_SIZE][MAP_SIZE];
     ship boats[TOTAL_SHIPS];
 } Players;
+
+#endif

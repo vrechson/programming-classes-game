@@ -5,6 +5,12 @@
 /*
  *	Libraries
  ***********************************************************************/
+#ifndef _BOARD_H_
+#define _BOARD_H_
+
 #include "definitions.h"
 
-void DrawBoard(Players Player1, Players Player2);
+void DrawBoard(Players player1, Players player2);
+void CleanMap(Players *player);
+
+#endif

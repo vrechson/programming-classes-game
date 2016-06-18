@@ -12,8 +12,8 @@
 
 void DrawBoard(Players *player1, Players *player2);
 void InitializeMap(Players *player1, Players *player2);
-int TransformX(int x);
-int CheckDisponibility(int x, int y, int height, int width, Players *player);
+int Letter2Num(int *x);
+int CheckDisponibility(int *x, int y, int height, int width, Players *player);
 int Positioning(int x, int y, int height, int width, char style, Players *player);
 
 #endif

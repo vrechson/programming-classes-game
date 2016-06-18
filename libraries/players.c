@@ -15,20 +15,20 @@ void buildPlayer(Players *player, Players *player2)
     do {
       printf("please insert a line and column to set your %d submarine: ", i);
       scanf(" %c %d", &x, &y);
-      flag = CheckDisponibility(x, y, 1, 1, player);
+      flag = CheckDisponibility(&x, y, 1, 1, player);
     } while (flag);
+    printf("%c\n", player->map[y][x].presentation);
     Positioning(x, y, 1, 1, 'S', player);
+    printf("%c\n", player->map[y][x].presentation);
   }
   printf("Agora vamos posicionar seu(s) %d battleship(s).\n", BATTLESHIP);
   for (i = 1, flag = 0; i <= BATTLESHIP; i++, flag = 0) {
     do {
       printf("Por favor, insira a linha e a coluna do seu %d battleship: ", i);
       scanf(" %c %d", &x, &y);
-
-      flag = CheckDisponibility(x, y, 2, 2, player);
+      flag = CheckDisponibility(&x, y, 2, 2, player);
 
     } while (flag);
-
     Positioning(x, y, 2, 2, 'B', player);
   }
   DrawBoard(player, player2);
@@ -38,7 +38,7 @@ void buildPlayer(Players *player, Players *player2)
       printf("Por favor, insira a linha e a coluna do seu %d craiser: ", i);
       scanf(" %c %d", &x, &y);
 
-      flag = CheckDisponibility(x, y, 1, 2, player);
+      flag = CheckDisponibility(&x, y, 1, 2, player);
 
     } while (flag);
 
@@ -51,7 +51,7 @@ void buildPlayer(Players *player, Players *player2)
       printf("Por favor, insira a linha e a coluna do seu %d destroyer: ", i);
       scanf(" %c %d", &x, &y);
 
-      flag = CheckDisponibility(x, y, 1, 4, player);
+      flag = CheckDisponibility(&x, y, 1, 4, player);
 
     } while (flag);
 
@@ -64,7 +64,7 @@ void buildPlayer(Players *player, Players *player2)
       printf("Por favor, insira a linha e a coluna do seu %d aircraft: ", i);
       scanf(" %c %d", &x, &y);
 
-      flag = CheckDisponibility(x, y, 1, 5, player);
+      flag = CheckDisponibility(&x, y, 1, 5, player);
 
     } while (flag);
 

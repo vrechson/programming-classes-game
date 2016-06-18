@@ -32,15 +32,28 @@ void DrawBoard(Players *player1, Players *player2)
         printf("%3c", k);
       } else if (i && j) {
         if(j <= MAP_SIZE) {
-          if (LEVEL && player1->map[i - 1][j - 1].presentation != WATER && player1->map[i - 1][j - 1].presentation != EMPTY)
-            printf("%3c", SHOT);
-          else
-            printf("%3c", player1->map[i - 1][j - 1].presentation);
+          if (LEVEL && player2->map[i - 1][j - 1].presentation != WATER && player2->map[i - 1][j - 1].presentation != EMPTY) {
+            if(player1->map[i - 1][j - 1].isVisible)
+              printf("%3c", SHOT);
+            else
+              printf("%3c", player1->map[i - 1][j - 1].background);
+          } else {
+            if(player1->map[i - 1][j - 1].isVisible)
+              printf("%3c", player1->map[i - 1][j - 1].presentation);
+            else
+              printf("%3c", player1->map[i - 1][j - 1].background);
+          }
         } else {
-          if (LEVEL && player2->map[i - 1][j - 1].presentation != WATER && player2->map[i - 1][j - 1].presentation != EMPTY)
-            printf("%3c", SHOT);
+          if (LEVEL && player2->map[i - 1][j - MAP_SIZE - 2].presentation != WATER && player2->map[i - 1][j - MAP_SIZE - 2].presentation != EMPTY)
+            if(player2->map[i - 1][j - MAP_SIZE - 2].isVisible)
+              printf("%3c", SHOT);
+            else
+              printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].background);
           else
-            printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
+            if(player2->map[i - 1][j - 1].isVisible)
+              printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
+            else
+              printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].background);
         }
       } else {
         printf("%3c", ' ');
@@ -57,58 +70,85 @@ void DrawMap(Players *player)
   system(CLEAR);
   for (i = 0, k = 64, printf("\n"); i <= MAP_SIZE; i++, k++, printf("\n"))
     for (j = 0; j <= MAP_SIZE; j++)
-      if(i == 0 && j)
+      if(i == 0 && j) {
         printf("%3d", j);
-      else if(i != 0 && j == 0)
+      } else if(i != 0 && j == 0) {
         printf("%3c", k);
-      else if(i != 0)
-        if(LEVEL && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY)
-          printf("%3c", SHOT);
-        else
-          printf("%3c", player->map[i - 1][j - 1].presentation);
-      else
+      } else if(i != 0) {
+        if(LEVEL && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY) {
+          if (player->map[i - 1][j - 1].isVisible)
+            printf("%3c", SHOT);
+          else
+            printf("%3c", player->map[i - 1][j - 1].background);
+        } else {
+          if (player->map[i - 1][j - 1].isVisible)
+            printf("%3c", player->map[i - 1][j - 1].presentation);
+          else
+            printf("%3c", player->map[i - 1][j - 1].background);
+        }
+      } else {
         printf("%3c", ' ');
+      }
   printf("\n");
 }
 
-void InitializeMap(Players *player1, Players *player2)
+void InitializeMap(Players *player)
 {
   int i, j;
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
-      player1->map[i][j].presentation = WATER;
-      player2->map[i][j].presentation = WATER;
-      player1->map[i][j].isVisible = 0;
-      player2->map[i][j].isVisible = 0;
+      player->map[i][j].presentation = WATER;
+      player->map[i][j].background = WATER;
+      player->map[i][j].isVisible = 1;
     }
 }
 
+void HideThings(Players *player)
+{
+  int i, j;
+
+  for (i = 0; i < MAP_SIZE; i++)
+    for (j = 0; j < MAP_SIZE; j++)
+      player->map[i][j].isVisible = 0;
+
+}
+
 int Letter2Num(int *x) {
-  if (*x > 64 && *x <= (64 + MAP_SIZE)) {
+  if (*x > 64 && *x <= (64 + MAP_SIZE))
     *x -= 64;
-  } else if ((*x > 96) && *x <= (96 + MAP_SIZE)) {
+  else if ((*x > 96) && *x <= (96 + MAP_SIZE))
     *x -= 96;
-  } else {
-    printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
+  else
     return 1;
-  }
 
   return 0;
 }
 
-int CheckDisponibility(int *x, int y, int height, int width, int rotation, Players *player)
+int CheckDisponibility(int *x, int y, int height, int width, int rotation, int ia, Players *player)
 {
-  int i, j;
+  int i, j, aux;
 
-  if(Letter2Num(x))
-    return 1;
+  if (rotation) {
+    aux = height;
+    height = width;
+    width = aux;
+  }
+
+  if(!ia)
+    if (Letter2Num(x)) {
+      printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
+      return 1;
+    }
+
   for (i = 0; i < height; i++)
     for (j = 0; j < width; j++)
       if (((y + j - 1) > (MAP_SIZE - 1)) || ((*x + i - 1) > (MAP_SIZE - 1))) {
-        printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
+        if (!ia)
+          printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
         return 1;
       } else if ( player->map[*x + i - 1][y + j - 1].presentation != WATER) {
-        printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
+        if (!ia)
+          printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
         return 1;
       }
       //printf("[debug]: %d %d %d", (y + j - 1), (*x + i - 1), MAP_SIZE);
@@ -117,7 +157,13 @@ int CheckDisponibility(int *x, int y, int height, int width, int rotation, Playe
 
 void Positioning(int x, int y, int height, int width, int rotation, char style, Players *player)
 {
-  int i, j;
+  int i, j, aux;
+
+  if (rotation) {
+    aux = height;
+    height = width;
+    width = aux;
+  }
 
   for (i = 0; i < height; i++)
     for (j = 0; j < width; j++) {

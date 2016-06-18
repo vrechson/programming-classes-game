@@ -5,37 +5,17 @@
 
 void DrawBoard(Players *player1, Players *player2)
 {
-  int i, j, k;
-  char l;
+  int i, j, k, l;
 
   system(CLEAR);
-// precisa de ajuste
-  for (i = 0; i <= MAP_SIZE; i++, printf("\n"))
-    for (j = 0, l = 'A'; j <= (2 * MAP_SIZE) + 1; j++)
-      if (i == 0) {
-        if(j == MAP_SIZE + 1) {
-          l = 'A';
+  for (i = 0; i <= MAP_SIZE; i++, printf("\n"));
+    for (j = 0, l = 1; j <= (2 * MAP_SIZE + 1); j++, l++)
+      if (i == 0 && j) {
+        if (j == (MAP_SIZE + 1)) {
+          l = 1;
           printf("\t");
         }
-        if (j && j != (MAP_SIZE + 1))
-          printf("%3c", l++);
-        else
-          printf("%3c", ' ');
-      } else {
-        if(j == 0 || j == MAP_SIZE + 1) {
-          if (j == 0)
-            printf("%3d", i);
-          else
-            printf("\t%3d", i);
-        } else {
-          if( j <= MAP_SIZE)
-            printf("%3c", player1->map[i - 1][j - 1].presentation);
-          else if (j == ((2 * MAP_SIZE) + 1))
-            printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
-          else
-            printf("%3c", player2->map[i - 1][j - MAP_SIZE - 1].presentation);
-        }
-
+        printf("%3d", l);
       }
 }
 

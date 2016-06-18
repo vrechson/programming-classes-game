@@ -20,7 +20,7 @@
  ***********************************************************************/
 int main(int argc, char *argv[])
 {
-  Players player1, player2;
+  Players player1, player2, *winner;
   int players;
 
   system(CLEAR);
@@ -41,11 +41,14 @@ int main(int argc, char *argv[])
     buildPlayer(&player1);
     buildIA(&player2);
     DrawBoard(&player1, &player2);
+    winner = guessEngine(&player1, &player2, 0);
   } else {
     buildPlayer(&player1);
     buildPlayer(&player2);
     DrawBoard(&player1, &player2);
+    winner = guessEngine(&player1, &player2, 1);
   }
 
+  printf("Parabens %s, você ganhou o jogo! deseja jogar novamente? (y/n)", winner->name);
   return 0;
 }

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "board.h"
 
 /*
@@ -172,5 +173,65 @@ void Positioning(int x, int y, int height, int width, int rotation, char style, 
 
   if (SHOW_MAP)
     DrawMap(player);
+
+}
+
+int PosBombing(int *x, int y, Players *player)
+{
+  Letter2Num(x);
+  if (player->map[*x][y].presentation != WATER || player->map[*x][y].presentation != EMPTY) {
+    player->map[*x][y].isVisible = 1;
+    return 1;
+  } else {
+    player->map[*x][y].presentation = EMPTY;
+    player->map[*x][y].background = EMPTY;
+    return 0;
+  }
+
+}
+
+int IABombing(Players *player)
+{
+  volatile int count = -1, x, y;
+  int index1, index2;
+
+  srand((unsigned) time(NULL));
+
+  count++;
+
+  if (count) {
+    index1 = rand() % 2;
+    index2 = rand() % 2;
+
+    if (!index1)
+      index1 = -1;
+    if (!index2)
+      index2 = -1;
+    if (x == (MAP_SIZE - 1))
+      index1 = -1;
+    if (y == (MAP_SIZE - 1))
+      index2 = -1;
+
+    if (player->map[x + index1][y + index2].presentation != WATER || player->map[x + index1][y + index2].presentation != EMPTY) {
+      player->map[x + index1][y + index2].isVisible = 1;
+      return 1;
+    } else {
+      count = -1;
+      player->map[x + index1][y + index2].presentation = EMPTY;
+      player->map[x + index1][y + index2].background = EMPTY;
+      return 0;
+    }
+  } else {
+    x = rand() % MAP_SIZE;
+    y = rand() % MAP_SIZE;
+    if (player->map[x + index1][y + index2].presentation != WATER || player->map[x + index1][y + index2].presentation != EMPTY) {
+      player->map[x + index1][y + index2].isVisible = 1;
+      return 1;
+    } else {
+      player->map[x + index1][y + index2].presentation = EMPTY;
+      player->map[x + index1][y + index2].background = EMPTY;
+      return 0;
+    }
+  }
 
 }

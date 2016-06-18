@@ -5,34 +5,32 @@
  * the user that discover first all the ships parts of his enemy win the game.
  */
 
-
 /*
  *	Libraries
  ***********************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <time.h>
 #include "libraries/board.h"
 #include "libraries/definitions.h"
 #include "libraries/players.h"
 
+/*
+ *	Main
+ ***********************************************************************/
 int main(int argc, char *argv[])
 {
   Players player1, player2;
-  int players, i, j;
+  int players;
 
-  //srand((unsigned) time(NULL));
   system(CLEAR);
-
-  //DrawBoard(player1, player2);
   InitializeMap(&player1, &player2);
-
-  printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
   DrawBoard(&player1, &player2);
 
+  printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
+
   do {
-    printf("\n\nPor favor, escolha o número de jogadores(1/2): ");
+    printf("\n\nPor favor, escolha o número de jogadores[1/2]: ");
     scanf(" %d", &players);
     if (players < 1 || players > 2)
       printf("Você deve escolher entre um ou dois jogaroes, tente de novo.\n");
@@ -44,9 +42,8 @@ int main(int argc, char *argv[])
   } else {
     buildPlayer(&player1);
     buildPlayer(&player2);
+    DrawBoard(&player1, &player2);
   }
-
-
 
   return 0;
 }

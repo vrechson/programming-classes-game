@@ -18,6 +18,7 @@
 #define LEVEL 0 // 0 - easy, 1 - hard
 #define MAP_SIZE 10 // size of the map
 #define WATER 'X'
+#define SHOT 'O'
 #define EMPTY '.'
 
 /* OS configurations */
@@ -28,8 +29,9 @@
 #endif
 
 #define VERSION 1.0
+
 /* game types */
-typedef struct {
+/* typedef struct {
     int id;
     int type;
     int width;
@@ -39,12 +41,19 @@ typedef struct {
     int rotation;
     char style;
     int status;
-} ship;
+} ship; */
+
+typedef struct {
+  char presentation;
+  int isVisible;
+  int show;
+} board;
 
 typedef struct Players {
     char name[30];
-    char map[MAP_SIZE][MAP_SIZE];
-    ship boats[TOTAL_SHIPS];
+    /*char map[MAP_SIZE][MAP_SIZE];*/
+    /*ship boats[TOTAL_SHIPS];*/
+    board map[MAP_SIZE][MAP_SIZE];
 } Players;
 
 #endif

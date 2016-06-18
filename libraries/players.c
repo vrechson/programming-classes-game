@@ -1,13 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "players.h"
+
 
 
 void buildPlayer(Players *player)
 {
   int i, j, k, x, y, flag;
   char answer;
-  printf("Vamo começar! Insira seu nome: ");
+
+  system(CLEAR);
+  printf("Vamos começar! Insira seu nome: ");
   scanf("%30s", player->name);
 
   printf("Certo %s, vamos configurar seu mapa! primeiro posicione seu(s) %d submarino(s) (1 casa de espaço).\n", player->name, SUBMARINE);

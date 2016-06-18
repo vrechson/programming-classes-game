@@ -11,7 +11,7 @@
 #include "definitions.h"
 #include "board.h"
 
-void buildPlayer(Players *player, Players *player2);
+void buildPlayer(Players *player);
 void buildIA(Players *player);
 
 #endif

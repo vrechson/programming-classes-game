@@ -32,7 +32,7 @@
   #define CLEAR "cls"
 #endif
 
-#define VERSION 1.1
+#define VERSION 1.01
 
 /*
  *	Types
@@ -52,8 +52,8 @@
 
 typedef struct {
   char presentation;
+  char background;
   int isVisible;
-  int show;
 } board;
 
 typedef struct Players {

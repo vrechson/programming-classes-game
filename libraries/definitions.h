@@ -5,6 +5,9 @@
 #ifndef _DEFINITIONS_H_
 #define _DEFINITIONS_H_
 
+/*
+ *	Definitions
+ ***********************************************************************/
 /* ship configurations */
 #define SUBMARINE 4 // 1 slot
 #define BATTLESHIP 3 // 4 slot
@@ -29,8 +32,11 @@
   #define CLEAR "cls"
 #endif
 
-#define VERSION 1.0
+#define VERSION 1.1
 
+/*
+ *	Types
+ ***********************************************************************/
 /* game types */
 /* typedef struct {
     int id;

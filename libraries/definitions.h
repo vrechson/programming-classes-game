@@ -16,6 +16,7 @@
 
 /* map settings */
 #define LEVEL 0 // 0 - easy, 1 - hard
+#define SHOW_MAP 1 // define if will show map when positioning a ship
 #define MAP_SIZE 10 // size of the map
 #define WATER 'X'
 #define SHOT 'O'

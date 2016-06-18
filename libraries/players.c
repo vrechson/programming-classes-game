@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "players.h"
 
 
@@ -27,7 +28,7 @@ void buildPlayer(Players *player)
     do {
       printf("por favor, insira a linha(letra) e a coluna(número) do seu %d submarino, respectvamente: ", i);
       scanf(" %c %d", &x, &y);
-      flag = CheckDisponibility(&x, y, 1, 1, 0, player);
+      flag = CheckDisponibility(&x, y, 1, 1, 0, 0, player);
     } while (flag);
     Positioning(x, y, 1, 1, 0, 'S', player);
   }
@@ -37,7 +38,7 @@ void buildPlayer(Players *player)
     do {
       printf("Por favor, insira a linha e a coluna do seu %d battleship: ", i);
       scanf(" %c %d", &x, &y);
-      flag = CheckDisponibility(&x, y, 2, 2, 0, player);
+      flag = CheckDisponibility(&x, y, 2, 2, 0, 0, player);
 
     } while (flag);
     Positioning(x, y, 2, 2, 0, 'B', player);
@@ -49,7 +50,7 @@ void buildPlayer(Players *player)
       printf("Por favor, insira a linha e a coluna do seu %d craiser: ", i);
       scanf(" %c %d", &x, &y);
 
-      flag = CheckDisponibility(&x, y, 1, 2, 0, player);
+      flag = CheckDisponibility(&x, y, 1, 2, 0, 0, player);
 
     } while (flag);
 
@@ -62,7 +63,7 @@ void buildPlayer(Players *player)
       printf("Por favor, insira a linha e a coluna do seu %d destroyer: ", i);
       scanf(" %c %d", &x, &y);
 
-      flag = CheckDisponibility(&x, y, 1, 4, 0, player);
+      flag = CheckDisponibility(&x, y, 1, 4, 0, 0, player);
 
     } while (flag);
 
@@ -75,7 +76,7 @@ void buildPlayer(Players *player)
       printf("Por favor, insira a linha e a coluna do seu %d aircraft: ", i);
       scanf(" %c %d", &x, &y);
 
-      flag = CheckDisponibility(&x, y, 1, 5, 0, player);
+      flag = CheckDisponibility(&x, y, 1, 5, 0, 0, player);
 
     } while (flag);
 
@@ -84,14 +85,77 @@ void buildPlayer(Players *player)
 
   next = 3;
   while (next != 1) {
-    if (!next)
+    if (!next) {
+      InitializeMap(player);
       buildPlayer(player);
+    }
     printf("Mapa finalizado, digite 1 para continuar e 0 para refazer seu tabuleiro: ");
     scanf(" %d", &next);
   }
 
+  HideThings(player);
+
 }
 void buildIA(Players *player)
 {
+  int i, x, y, flag, pos;
+  srand((unsigned) time(NULL));
+  strcpy(player->name, "Mr. Robot");
+
+  for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
+    do {
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
+      pos = rand() % 2;
+      flag = CheckDisponibility(&x, y, 1, 1, pos, 1, player);
+    } while (flag);
+    Positioning(x, y, 1, 1, pos, 'S', player);
+  }
+
+  for (i = 1, flag = 0; i <= BATTLESHIP; i++, flag = 0) {
+    do {
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
+      pos = rand() % 2;
+      flag = CheckDisponibility(&x, y, 2, 2, pos, 1, player);
+
+    } while (flag);
+    Positioning(x, y, 2, 2, pos, 'B', player);
+  }
+
+  for (i = 1, flag = 0; i <= CRAISER; i++, flag = 0) {
+    do {
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
+      pos = rand() % 2;
+      flag = CheckDisponibility(&x, y, 1, 2, pos, 1, player);
+
+    } while (flag);
+    Positioning(x, y, 1, 2, pos, 'C', player);
+  }
+
+  for (i = 1, flag = 0; i <= DESTROYER; i++, flag = 0) {
+    do {
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
+      pos = rand() % 2;
+      flag = CheckDisponibility(&x, y, 1, 4, pos, 1, player);
+
+    } while (flag);
+    Positioning(x, y, 1, 4, pos, 'D', player);
+  }
+
+  for (i = 1, flag = 0; i <= AIRCRAFT; i++, flag = 0) {
+    do {
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
+
+      flag = CheckDisponibility(&x, y, 1, 5, pos, 1, player);
+
+    } while (flag);
+    Positioning(x, y, 1, 5, pos, 'A', player);
+  }
+
+  HideThings(player);
 
 }

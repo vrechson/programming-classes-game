@@ -1,22 +1,53 @@
+/*
+ *	Libraries
+ ***********************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "board.h"
 
+/*
+ *	FUnctions
+ ***********************************************************************/
 void DrawBoard(Players *player1, Players *player2)
 {
   int i, j, k, l;
 
   system(CLEAR);
-  for (i = 0; i <= MAP_SIZE; i++, printf("\n"));
-    for (j = 0, l = 1; j <= (2 * MAP_SIZE + 1); j++, l++)
-      if (i == 0 && j) {
+  printf("\n");
+
+  for (i = 0, k = 64; i <= MAP_SIZE; i++, k++, printf("\n"))
+    for (j = 0, l = 1; j <= ((2 * MAP_SIZE) + 1); j++)
+      if (!i && j) {
         if (j == (MAP_SIZE + 1)) {
           l = 1;
           printf("\t");
+          printf("%3c", ' ');
+        } else {
+          printf("%3d", l++);
         }
-        printf("%3d", l);
+      } else if (i && (!j || j == (MAP_SIZE + 1))){
+        if (j == MAP_SIZE + 1)
+          printf("\t");
+        printf("%3c", k);
+      } else if (i && j) {
+        if(j <= MAP_SIZE) {
+          if (LEVEL && player1->map[i - 1][j - 1].presentation != WATER && player1->map[i - 1][j - 1].presentation != EMPTY)
+            printf("%3c", SHOT);
+          else
+            printf("%3c", player1->map[i - 1][j - 1].presentation);
+        } else {
+          if (LEVEL && player2->map[i - 1][j - 1].presentation != WATER && player2->map[i - 1][j - 1].presentation != EMPTY)
+            printf("%3c", SHOT);
+          else
+            printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
+        }
+      } else {
+        printf("%3c", ' ');
       }
+
+    printf("\n");
+
 }
 
 void DrawMap(Players *player)
@@ -31,7 +62,10 @@ void DrawMap(Players *player)
       else if(i != 0 && j == 0)
         printf("%3c", k);
       else if(i != 0)
-        printf("%3c", player->map[i - 1][j - 1].presentation);
+        if(LEVEL && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY)
+          printf("%3c", SHOT);
+        else
+          printf("%3c", player->map[i - 1][j - 1].presentation);
       else
         printf("%3c", ' ');
   printf("\n");
@@ -62,7 +96,7 @@ int Letter2Num(int *x) {
   return 0;
 }
 
-int CheckDisponibility(int *x, int y, int height, int width, Players *player)
+int CheckDisponibility(int *x, int y, int height, int width, int rotation, Players *player)
 {
   int i, j;
 
@@ -81,7 +115,7 @@ int CheckDisponibility(int *x, int y, int height, int width, Players *player)
   return 0;
 }
 
-int Positioning(int x, int y, int height, int width, char style, Players *player)
+void Positioning(int x, int y, int height, int width, int rotation, char style, Players *player)
 {
   int i, j;
 

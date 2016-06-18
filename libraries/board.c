@@ -90,7 +90,8 @@ int Positioning(int x, int y, int height, int width, char style, Players *player
   int i, j;
 
   for (i = 0; i < height; i++)
-    for (j = 0; x < width; j++)
+    for (j = 0; j < width; j++) {
       player->map[y + i][x + j].presentation = style;
+    }
 
 }

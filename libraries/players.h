@@ -9,8 +9,9 @@
 #define _PLAYERS_H_
 
 #include "definitions.h"
+#include "board.h"
 
-void buildPlayer(Players *player);
+void buildPlayer(Players *player, Players *player2);
 void buildIA(Players *player);
 
 #endif

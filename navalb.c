@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
   int players;
 
   system(CLEAR);
-  InitializeMap(&player1, &player2);
+  InitializeMap(&player1);
+  InitializeMap(&player2);
   DrawBoard(&player1, &player2);
 
   printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
   if (players == 1) {
     buildPlayer(&player1);
     buildIA(&player2);
+    DrawBoard(&player1, &player2);
   } else {
     buildPlayer(&player1);
     buildPlayer(&player2);

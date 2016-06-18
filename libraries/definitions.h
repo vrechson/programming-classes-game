@@ -15,7 +15,7 @@
 #define DESTROYER 2 // 4 slot
 #define AIRCRAFT 1 // 5 slot
 
-//#define TOTAL_SHIPS (SUBMARINE + BATTLESHIP + CRAISER + DESTROYER + AIRCRAFT)
+#define TOTAL_SHIPS (SUBMARINE + BATTLESHIP + CRAISER + DESTROYER + AIRCRAFT)
 
 /* map settings */
 #define LEVEL 0 // 0 - easy, 1 - hard

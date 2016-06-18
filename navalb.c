@@ -47,8 +47,5 @@ int main(int argc, char *argv[])
   }
 
 
-
-  memset(player1.map, WATER, MAP_SIZE * MAP_SIZE * sizeof(char));
-
   return 0;
 }

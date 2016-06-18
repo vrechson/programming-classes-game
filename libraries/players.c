@@ -159,3 +159,75 @@ void buildIA(Players *player)
   HideThings(player);
 
 }
+
+Players *guessEngine(Players *player1, Players *player2, int ia)
+{
+  srand((unsigned) time(NULL));
+  int y, x, guess = rand() % 2, flag, g_p1, g_p2, count_p1, count_p2;
+
+  g_p1 = g_p2 = 1;
+  count_p1 = count_p2 = 0;
+  while (1) {
+    if (guess) {
+      if (g_p1) {
+        printf("É a vez do jogador: %s.", player1->name);
+        printf("Insira as coordenadas para bombardear: ");
+      }
+      scanf(" %c %d", &x, &y);
+      flag = PosBombing(&x, y, player2);
+      system(CLEAR);
+      if (flag) {
+        g_p1 = 0;
+        count_p1++;
+        if (count_p1 == (TOTAL_SHIPS * 16))
+          return player1;
+        DrawBoard(player1, player2);
+        printf("%s acertou uma posição, jogue novamente: ");
+        guess = 1;
+      } else {
+        g_p1 = 1;
+        DrawBoard(player1, player2);
+      }
+    } else {
+      if (!ia) {
+        if (g_p2) {
+          printf("É a vez do jogador: %s.", player2->name);
+          printf(" Insira as coordenadas para bombardear: ");
+        }
+        scanf(" %c %d", &x, &y);
+        flag = PosBombing(&x, y, player1);
+        system(CLEAR);
+        if (flag) {
+          g_p2 = 0;
+          count_p2++;
+          if (count_p2 == (TOTAL_SHIPS * 16))
+            return player2;
+          DrawBoard(player1, player2);
+          printf("%s acertou uma posição, jogue novamente: ", player2->name);
+          guess = 0;
+        } else {
+          count_p2 = 1;
+          DrawBoard(player1, player2);
+        }
+      } else {
+        if (g_p2) {
+          printf("É a vez do jogador: %s.", player2->name);
+        }
+        flag = IABombing(player1);
+        system(CLEAR);
+        if (flag) {
+          g_p2 = 0;
+          count_p2++;
+          if (count_p2 == (TOTAL_SHIPS * 16))
+            return player2;
+          DrawBoard(player1, player2);
+          printf("%s acertou uma posição!", player2->name);
+          guess = 0;
+        } else {
+          count_p2 = 1;
+          DrawBoard(player1, player2);
+        }
+      }
+    }
+  }
+}

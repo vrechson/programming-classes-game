@@ -9,7 +9,7 @@
 #define _BOARD_H_
 
 #include "definitions.h"
-
+//hahaha
 void DrawBoard(Players *player1, Players *player2);
 void InitializeMap(Players *player1, Players *player2);
 int Letter2Num(int *x);

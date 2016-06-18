@@ -46,17 +46,18 @@ void InitializeMap(Players *player1, Players *player2)
   int i, j;
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
-      player1->map[i][j].presentation = player2->map[i][j].presentation = WATER;
-      player1->map[i][j].isVisible = player2->map[i][j].isVisible = 0;
-
+      player1->map[i][j].presentation = WATER;
+      player2->map[i][j].presentation = WATER;
+      player1->map[i][j].isVisible = 0;
+      player2->map[i][j].isVisible = 0;
     }
 }
 
-int TransformX(int x) {
-  if (x > 64 && x < (64 + MAP_SIZE)) {
-    x -= 64;
-  } else if ((x > 96) && x < (96 + MAP_SIZE)) {
-    x -= 96;
+int Letter2Num(int *x) {
+  if (*x > 64 && *x < (64 + MAP_SIZE)) {
+    *x -= 64;
+  } else if ((*x > 96) && *x < (96 + MAP_SIZE)) {
+    *x -= 96;
   } else {
     printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
     return 1;
@@ -65,16 +66,18 @@ int TransformX(int x) {
   return 0;
 }
 
-int CheckDisponibility(int x, int y, int height, int width, Players *player)
+int CheckDisponibility(int *x, int y, int height, int width, Players *player)
 {
   int i, j;
 
+  if(Letter2Num(x))
+    return 1;
   for (i = 0; i < height; i++)
-    for (j = 0; x < width; j++)
-      if ( (y + i) > MAP_SIZE - 1|| (x + j) > MAP_SIZE - 1) {
+    for (j = 0; j < width; j++)
+      if ( (y + i) > MAP_SIZE - 1|| (*x + j) > MAP_SIZE - 1) {
         printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
         return 1;
-      } else if ( player->map[y + i][x + j].presentation != WATER) {
+      } else if ( player->map[y + i][*x + j].presentation != WATER) {
         printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
         return 1;
       }

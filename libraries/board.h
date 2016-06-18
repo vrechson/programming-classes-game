@@ -15,9 +15,10 @@
  ***********************************************************************/
 void DrawBoard(Players *player1, Players *player2);
 void DrawMap(Players *player);
-void InitializeMap(Players *player1, Players *player2);
+void InitializeMap(Players *player);
+void HideThings(Players *player);
 int Letter2Num(int *x);
-int CheckDisponibility(int *x, int y, int height, int width, int rotation, Players *player);
+int CheckDisponibility(int *x, int y, int height, int width, int rotation, int ia, Players *player);
 void Positioning(int x, int y, int height, int width, int rotation, char style, Players *player);
 
 #endif

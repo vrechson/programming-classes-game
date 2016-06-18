@@ -11,6 +11,9 @@
 #include "definitions.h"
 #include "board.h"
 
+/*
+ *	Protypes
+ ***********************************************************************/
 void buildPlayer(Players *player);
 void buildIA(Players *player);
 

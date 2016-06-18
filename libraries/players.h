@@ -16,5 +16,6 @@
  ***********************************************************************/
 void buildPlayer(Players *player);
 void buildIA(Players *player);
+Players *guessEngine(Players *player1, Players *player2, int ia);
 
 #endif

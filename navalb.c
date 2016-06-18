@@ -1,5 +1,5 @@
 /*
- * navalb is a game developed in C
+ * navalb is a game developed in C as part of algorithm classes
  *
  * The point of the game is guess positions (e.g. A-12, or C-1) looking for parts of the enemy ships
  * the user that discover first all the ships parts of his enemy win the game.

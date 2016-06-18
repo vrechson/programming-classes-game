@@ -10,11 +10,14 @@
 
 #include "definitions.h"
 
+/*
+ *	Prototypes
+ ***********************************************************************/
 void DrawBoard(Players *player1, Players *player2);
 void DrawMap(Players *player);
 void InitializeMap(Players *player1, Players *player2);
 int Letter2Num(int *x);
-int CheckDisponibility(int *x, int y, int height, int width, Players *player);
-int Positioning(int x, int y, int height, int width, char style, Players *player);
+int CheckDisponibility(int *x, int y, int height, int width, int rotation, Players *player);
+void Positioning(int x, int y, int height, int width, int rotation, char style, Players *player);
 
 #endif

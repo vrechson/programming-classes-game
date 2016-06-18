@@ -1,96 +1,78 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "board.h"
+#include "players.h"
 
-void DrawBoard(Players *player1, Players *player2)
+
+void buildPlayer(Players *player, Players *player2)
 {
-  int i, j, k;
-  char l;
+  int i, j, k, x, y, flag;
+  char answer;
+  printf("Hello Player! insert your name to start building your map: ");
+  scanf("%30s", player->name);
 
-  system(CLEAR);
-// precisa de ajuste
-  for (i = 0; i <= MAP_SIZE; i++, printf("\n"))
-    for (j = 0, l = 'A'; j <= (2 * MAP_SIZE) + 1; j++)
-      if (i == 0) {
-        if(j == MAP_SIZE + 1) {
-          l = 'A';
-          printf("\t");
-        }
-        if (j && j != (MAP_SIZE + 1))
-          printf("%3c", l++);
-        else
-          printf("%3c", ' ');
-      } else {
-        if(j == 0 || j == MAP_SIZE + 1) {
-          if (j == 0)
-            printf("%3d", i);
-          else
-            printf("\t%3d", i);
-        } else {
-          if( j <= MAP_SIZE)
-            printf("%3c", player1->map[i - 1][j - 1].presentation);
-          else if (j == ((2 * MAP_SIZE) + 1))
-            printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
-          else
-            printf("%3c", player2->map[i - 1][j - MAP_SIZE - 1].presentation);
-        }
+  printf("Ok %s, lets set your board map! first step is positioning your %d submarine(s) (1 slot of space).\n", player->name, SUBMARINE);
+  for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
+    do {
+      printf("please insert a line and column to set your %d submarine: ", i);
+      scanf(" %c %d", &x, &y);
+      flag = CheckDisponibility(&x, y, 1, 1, player);
+    } while (flag);
+    printf("%c\n", player->map[y][x].presentation);
+    Positioning(x, y, 1, 1, 'S', player);
+    printf("%c\n", player->map[y][x].presentation);
+  }
+  printf("Agora vamos posicionar seu(s) %d battleship(s).\n", BATTLESHIP);
+  for (i = 1, flag = 0; i <= BATTLESHIP; i++, flag = 0) {
+    do {
+      printf("Por favor, insira a linha e a coluna do seu %d battleship: ", i);
+      scanf(" %c %d", &x, &y);
+      flag = CheckDisponibility(&x, y, 2, 2, player);
 
-      }
+    } while (flag);
+    Positioning(x, y, 2, 2, 'B', player);
+  }
+  DrawBoard(player, player2);
+  printf("O próximo passo é alocar seu(s) %d craiser(s).\n", CRAISER);
+  for (i = 1, flag = 0; i <= CRAISER; i++, flag = 0) {
+    do {
+      printf("Por favor, insira a linha e a coluna do seu %d craiser: ", i);
+      scanf(" %c %d", &x, &y);
 
+      flag = CheckDisponibility(&x, y, 1, 2, player);
 
-}
+    } while (flag);
 
-void InitializeMap(Players *player1, Players *player2)
-{
-  int i, j;
-  for (i = 0; i < MAP_SIZE; i++)
-    for (j = 0; j < MAP_SIZE; j++) {
-      player1->map[i][j].presentation = WATER;
-      player2->map[i][j].presentation = WATER;
-      player1->map[i][j].isVisible = 0;
-      player2->map[i][j].isVisible = 0;
-    }
-}
+    Positioning(x, y, 1, 2, 'C', player);
+  }
+  DrawBoard(player, player2);
+  printf("Partimos então para seu(s) %d destroyer(s).\n", DESTROYER);
+  for (i = 1, flag = 0; i <= DESTROYER; i++, flag = 0) {
+    do {
+      printf("Por favor, insira a linha e a coluna do seu %d destroyer: ", i);
+      scanf(" %c %d", &x, &y);
 
-int Letter2Num(int *x) {
-  if (*x > 64 && *x < (64 + MAP_SIZE)) {
-    *x -= 64;
-  } else if ((*x > 96) && *x < (96 + MAP_SIZE)) {
-    *x -= 96;
-  } else {
-    printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
-    return 1;
+      flag = CheckDisponibility(&x, y, 1, 4, player);
+
+    } while (flag);
+
+    Positioning(x, y, 1, 4, 'D', player);
+  }
+  DrawBoard(player, player2);
+  printf("Para finalizar inserimos seu(s) %d aircraft(s).\n", AIRCRAFT);
+  for (i = 1, flag = 0; i <= AIRCRAFT; i++, flag = 0) {
+    do {
+      printf("Por favor, insira a linha e a coluna do seu %d aircraft: ", i);
+      scanf(" %c %d", &x, &y);
+
+      flag = CheckDisponibility(&x, y, 1, 5, player);
+
+    } while (flag);
+
+    Positioning(x, y, 1, 5, 'A', player);
   }
 
-  return 0;
 }
-
-int CheckDisponibility(int *x, int y, int height, int width, Players *player)
+void buildIA(Players *player)
 {
-  int i, j;
-
-  if(Letter2Num(x))
-    return 1;
-  for (i = 0; i < height; i++)
-    for (j = 0; j < width; j++)
-      if ( (y + i) > MAP_SIZE - 1|| (*x + j) > MAP_SIZE - 1) {
-        printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
-        return 1;
-      } else if ( player->map[y + i][*x + j].presentation != WATER) {
-        printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
-        return 1;
-      }
-
-  return 0;
-}
-
-int Positioning(int x, int y, int height, int width, char style, Players *player)
-{
-  int i, j;
-
-  for (i = 0; i < height; i++)
-    for (j = 0; x < width; j++)
-      player->map[y + i][x + j].presentation = style;
 
 }

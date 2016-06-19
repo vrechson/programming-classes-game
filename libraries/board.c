@@ -50,7 +50,7 @@ void DrawBoard(Players *player1, Players *player2)
             else
               printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].background);
           else
-            if(player2->map[i - 1][j - 1].isVisible)
+            if(player2->map[i - 1][j - MAP_SIZE - 2].isVisible)
               printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
             else
               printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].background);
@@ -113,18 +113,16 @@ void HideThings(Players *player)
 
 }
 
-int Letter2Num(int *x) {
-  if (*x > 64 && *x <= (64 + MAP_SIZE))
-    *x -= 64;
-  else if ((*x > 96) && *x <= (96 + MAP_SIZE))
-    *x -= 96;
+int Letter2Num(char x) {
+  if (x > 64 && x <= (64 + MAP_SIZE))
+    return (int) (x -= 64);
+  else if ((x > 96) && x <= (96 + MAP_SIZE))
+    return (int)(x -= 96);
   else
-    return 1;
-
-  return 0;
+    return MAP_SIZE + 10;
 }
 
-int CheckDisponibility(int *x, int y, int height, int width, int rotation, int ia, Players *player)
+int CheckDisponibility(int x, int y, int height, int width, int rotation, int ia, Players *player)
 {
   int i, j, aux;
 
@@ -134,19 +132,13 @@ int CheckDisponibility(int *x, int y, int height, int width, int rotation, int i
     width = aux;
   }
 
-  if(!ia)
-    if (Letter2Num(x)) {
-      printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
-      return 1;
-    }
-
   for (i = 0; i < height; i++)
     for (j = 0; j < width; j++)
-      if (((y + j - 1) > (MAP_SIZE - 1)) || ((*x + i - 1) > (MAP_SIZE - 1))) {
+      if (((y + j - 1) > (MAP_SIZE - 1)) || ((x + i - 1) > (MAP_SIZE - 1))) {
         if (!ia)
           printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
         return 1;
-      } else if ( player->map[*x + i - 1][y + j - 1].presentation != WATER) {
+      } else if ( player->map[x + i - 1][y + j - 1].presentation != WATER) {
         if (!ia)
           printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
         return 1;
@@ -175,16 +167,15 @@ void Positioning(int x, int y, int height, int width, int rotation, char style, 
 
 }
 
-int PosBombing(int *x, int y, Players *player)
+int PosBombing(int x, int y, Players *player)
 {
-  Letter2Num(x);
-  printf("[inside]: %d\n", *x);
-  if (player->map[*x - 1][y - 1].presentation != WATER || player->map[*x - 1][y - 1].presentation != EMPTY) {
-    player->map[*x - 1][y - 1].isVisible = 1;
+  if (player->map[x - 1][y - 1].presentation != WATER && player->map[x - 1][y - 1].presentation != EMPTY) {
+    player->map[x - 1][y - 1].isVisible = 1;
     return 1;
   } else {
-    player->map[*x - 1][y - 1].presentation = EMPTY;
-    player->map[*x - 1][y - 1].background = EMPTY;
+    player->map[x - 1][y - 1].presentation = EMPTY;
+    player->map[x - 1][y - 1].background = EMPTY;
+    player->map[x - 1][y - 1].isVisible = 1;
     return 0;
   }
 
@@ -211,13 +202,14 @@ int IABombing(Players *player)
       index2 = -1;
 
       //printf("%d", x + index2);
-    if (player->map[x + index1][y + index2].presentation != WATER || player->map[x + index1][y + index2].presentation != EMPTY) {
+    if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
       player->map[x + index1][y + index2].isVisible = 1;
       return 1;
     } else {
       count = -1;
       player->map[x + index1][y + index2].presentation = EMPTY;
       player->map[x + index1][y + index2].background = EMPTY;
+      player->map[x - 1][y - 1].isVisible = 1;
       return 0;
     }
   } else {
@@ -234,12 +226,14 @@ int IABombing(Players *player)
     if (y == (MAP_SIZE - 1))
       index2 = -1;
 
-    if (player->map[x + index1][y + index2].presentation != WATER || player->map[x + index1][y + index2].presentation != EMPTY) {
+    if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
       player->map[x + index1][y + index2].isVisible = 1;
+      //DrawMap(player);
       return 1;
     } else {
       player->map[x + index1][y + index2].presentation = EMPTY;
       player->map[x + index1][y + index2].background = EMPTY;
+      player->map[x - 1][y - 1].isVisible = 1;
       return 0;
     }
   }

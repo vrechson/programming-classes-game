@@ -5,6 +5,9 @@
 #ifndef _DEFINITIONS_H_
 #define _DEFINITIONS_H_
 
+/*
+ *	Definitions
+ ***********************************************************************/
 /* ship configurations */
 #define SUBMARINE 4 // 1 slot
 #define BATTLESHIP 3 // 4 slot
@@ -16,6 +19,7 @@
 
 /* map settings */
 #define LEVEL 0 // 0 - easy, 1 - hard
+#define SHOW_MAP 1 // define if will show map when positioning a ship
 #define MAP_SIZE 10 // size of the map
 #define WATER 'X'
 #define SHOT 'O'
@@ -28,8 +32,11 @@
   #define CLEAR "cls"
 #endif
 
-#define VERSION 1.0
+#define VERSION 1.01
 
+/*
+ *	Types
+ ***********************************************************************/
 /* game types */
 /* typedef struct {
     int id;
@@ -45,8 +52,8 @@
 
 typedef struct {
   char presentation;
+  char background;
   int isVisible;
-  int show;
 } board;
 
 typedef struct Players {

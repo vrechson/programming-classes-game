@@ -11,7 +11,11 @@
 #include "definitions.h"
 #include "board.h"
 
-void buildPlayer(Players *player, Players *player2);
+/*
+ *	Protypes
+ ***********************************************************************/
+void buildPlayer(Players *player);
 void buildIA(Players *player);
+Players *guessEngine(Players *player1, Players *player2, int ia);
 
 #endif

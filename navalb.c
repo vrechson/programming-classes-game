@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
   } while (players < 1 || players > 2);
 
   if (players == 1) {
-  //  buildPlayer(&player1);
+    buildPlayer(&player1);
     buildIA(&player2);
     DrawBoard(&player1, &player2);
     DrawBoard(&player1, &player2);

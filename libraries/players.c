@@ -184,13 +184,14 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
       if (flag) {
         g_p1 = 0;
         count_p1++;
-        if (count_p1 == (TOTAL_SHIPS * 16))
+        if (count_p1 == TOTAL_SLOTS)
           return player1;
         DrawBoard(player1, player2);
         printf("%s acertou uma posição, jogue novamente: ");
         guess = 1;
       } else {
         g_p1 = 1;
+        guess = 0;
         DrawBoard(player1, player2);
       }
     } else {
@@ -206,18 +207,19 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
         if (flag) {
           g_p2 = 0;
           count_p2++;
-          if (count_p2 == (TOTAL_SHIPS * 16))
+          if (count_p2 == TOTAL_SLOTS)
             return player2;
           DrawBoard(player1, player2);
-          printf("%s acertou uma posição, jogue novamente: ", player2->name);
+          printf("%s acertou uma posição, jogue novamente: ",  player2->name);
           guess = 0;
         } else {
           count_p2 = 1;
+          guess = 1;
           DrawBoard(player1, player2);
         }
       } else {
         if (g_p2) {
-          printf("É a vez do jogador: %s.", player2->name);
+          printf("%s fez seu lance.", player2->name);
         }
 
         flag = IABombing(player1);
@@ -225,13 +227,14 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
         if (flag) {
           g_p2 = 0;
           count_p2++;
-          if (count_p2 == (TOTAL_SHIPS * 16))
+          if (count_p2 == TOTAL_SLOTS)
             return player2;
           DrawBoard(player1, player2);
           printf("%s acertou uma posição!", player2->name);
           guess = 0;
         } else {
           count_p2 = 1;
+          guess = 1;
           DrawBoard(player1, player2);
         }
       }

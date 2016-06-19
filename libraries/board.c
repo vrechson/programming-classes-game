@@ -169,12 +169,13 @@ void Positioning(int x, int y, int height, int width, int rotation, char style, 
 
 int PosBombing(int x, int y, Players *player)
 {
-  if (player->map[x - 1][y - 1].presentation != WATER || player->map[x - 1][y - 1].presentation != EMPTY) {
+  if (player->map[x - 1][y - 1].presentation != WATER && player->map[x - 1][y - 1].presentation != EMPTY) {
     player->map[x - 1][y - 1].isVisible = 1;
     return 1;
   } else {
     player->map[x - 1][y - 1].presentation = EMPTY;
     player->map[x - 1][y - 1].background = EMPTY;
+    player->map[x - 1][y - 1].isVisible = 1;
     return 0;
   }
 
@@ -201,13 +202,14 @@ int IABombing(Players *player)
       index2 = -1;
 
       //printf("%d", x + index2);
-    if (player->map[x + index1][y + index2].presentation != WATER || player->map[x + index1][y + index2].presentation != EMPTY) {
+    if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
       player->map[x + index1][y + index2].isVisible = 1;
       return 1;
     } else {
       count = -1;
       player->map[x + index1][y + index2].presentation = EMPTY;
       player->map[x + index1][y + index2].background = EMPTY;
+      player->map[x - 1][y - 1].isVisible = 1;
       return 0;
     }
   } else {
@@ -224,13 +226,14 @@ int IABombing(Players *player)
     if (y == (MAP_SIZE - 1))
       index2 = -1;
 
-    if (player->map[x + index1][y + index2].presentation != WATER || player->map[x + index1][y + index2].presentation != EMPTY) {
+    if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
       player->map[x + index1][y + index2].isVisible = 1;
-      DrawMap(player);
+      //DrawMap(player);
       return 1;
     } else {
       player->map[x + index1][y + index2].presentation = EMPTY;
       player->map[x + index1][y + index2].background = EMPTY;
+      player->map[x - 1][y - 1].isVisible = 1;
       return 0;
     }
   }

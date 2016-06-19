@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "libraries/board.h"
 #include "libraries/definitions.h"
 #include "libraries/players.h"
@@ -22,6 +23,8 @@ int main(int argc, char *argv[])
 {
   Players player1, player2, *winner;
   int players;
+
+  srand((unsigned) time(NULL));
 
   system(CLEAR);
   InitializeMap(&player1);
@@ -38,17 +41,22 @@ int main(int argc, char *argv[])
   } while (players < 1 || players > 2);
 
   if (players == 1) {
-    buildPlayer(&player1);
+  //  buildPlayer(&player1);
     buildIA(&player2);
     DrawBoard(&player1, &player2);
-    winner = guessEngine(&player1, &player2, 0);
+    player2.map[4][4].isVisible = 1;
+    player2.map[4][5].isVisible = 1;
+    //player2.map[5][4].isVisible = 1;
+  //  player2.map[5][5].isVisible = 1;
+    DrawBoard(&player1, &player2);
+  //  winner = guessEngine(&player1, &player2, 1);
   } else {
     buildPlayer(&player1);
     buildPlayer(&player2);
     DrawBoard(&player1, &player2);
-    winner = guessEngine(&player1, &player2, 1);
+    winner = guessEngine(&player1, &player2, 0);
   }
 
-  printf("Parabens %s, você ganhou o jogo! deseja jogar novamente? (y/n)", winner->name);
+  printf(" %s ganhou o jogo! deseja jogar novamente? (y/n)", winner->name);
   return 0;
 }

@@ -41,15 +41,11 @@ int main(int argc, char *argv[])
   } while (players < 1 || players > 2);
 
   if (players == 1) {
-  //  buildPlayer(&player1);
+    buildPlayer(&player1);
     buildIA(&player2);
     DrawBoard(&player1, &player2);
-    player2.map[4][4].isVisible = 1;
-    player2.map[4][5].isVisible = 1;
-    //player2.map[5][4].isVisible = 1;
-  //  player2.map[5][5].isVisible = 1;
     DrawBoard(&player1, &player2);
-  //  winner = guessEngine(&player1, &player2, 1);
+    winner = guessEngine(&player1, &player2, 1);
   } else {
     buildPlayer(&player1);
     buildPlayer(&player2);

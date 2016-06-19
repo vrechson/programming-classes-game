@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include "players.h"
 
 
@@ -99,7 +98,6 @@ void buildPlayer(Players *player)
 void buildIA(Players *player)
 {
   int i, x, y, flag, pos;
-  srand((unsigned) time(NULL));
   strcpy(player->name, "Mr. Robot");
 
   for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
@@ -162,18 +160,18 @@ void buildIA(Players *player)
 
 Players *guessEngine(Players *player1, Players *player2, int ia)
 {
-  srand((unsigned) time(NULL));
   int y, x, guess = rand() % 2, flag, g_p1, g_p2, count_p1, count_p2;
 
   g_p1 = g_p2 = 1;
   count_p1 = count_p2 = 0;
   while (1) {
-    if (guess) {
+    if (/*guess*/1) {
       if (g_p1) {
-        printf("É a vez do jogador: %s.", player1->name);
-        printf("Insira as coordenadas para bombardear: ");
+        printf("É a vez do jogador: %s.", "vrech"/* player1->name*/);
+        printf(" Insira as coordenadas para bombardear: ");
       }
       scanf(" %c %d", &x, &y);
+      printf("[outside]: %d", x);
       flag = PosBombing(&x, y, player2);
       system(CLEAR);
       if (flag) {
@@ -195,7 +193,7 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
           printf(" Insira as coordenadas para bombardear: ");
         }
         scanf(" %c %d", &x, &y);
-        flag = PosBombing(&x, y, player1);
+        //flag = PosBombing(&x, y, player1);
         system(CLEAR);
         if (flag) {
           g_p2 = 0;
@@ -213,6 +211,7 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
         if (g_p2) {
           printf("É a vez do jogador: %s.", player2->name);
         }
+
         flag = IABombing(player1);
         system(CLEAR);
         if (flag) {

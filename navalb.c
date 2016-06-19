@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
   int players;
 
   srand((unsigned) time(NULL));
-  // hi everyone
+
   system(CLEAR);
   InitializeMap(&player1);
   InitializeMap(&player2);

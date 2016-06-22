@@ -165,7 +165,7 @@ void buildIA(Players *player, char *name)
     Positioning(x, y, 1, 5, pos, 'A', player);
   }
 
-//  HideThings(player);
+  HideThings(player);
 
 }
 

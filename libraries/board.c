@@ -134,16 +134,16 @@ int CheckDisponibility(int x, int y, int height, int width, int rotation, int ia
 
   for (i = 0; i < height; i++)
     for (j = 0; j < width; j++)
-      if (((y + j - 1) > (MAP_SIZE - 1)) || ((x + i - 1) > (MAP_SIZE - 1))) {
+      if (((y + j - 1) > (MAP_SIZE - 1)) || ((x + i - 1) > (MAP_SIZE - 1)) || ((y + j - 1) < 0) || ((x + i - 1) < 0)) {
         if (!ia)
           printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
         return 1;
-      } else if ( player->map[x + i - 1][y + j - 1].presentation != WATER) {
+      } else if (player->map[x + i - 1][y + j - 1].presentation != WATER) {
         if (!ia)
           printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
         return 1;
       }
-      //printf("[debug]: %d %d %d", (y + j - 1), (*x + i - 1), MAP_SIZE);
+      //printf("[debug]: %d %d %d", (y + j - 1), (x + i - 1), MAP_SIZE);
   return 0;
 }
 

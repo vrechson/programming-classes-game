@@ -12,7 +12,7 @@
  ***********************************************************************/
 void buildPlayer(Players *player)
 {
-  int i, x, y, flag, next;
+  int i, x, y, flag, next, map;
   char x_c;
 
   system(CLEAR);
@@ -22,7 +22,13 @@ void buildPlayer(Players *player)
 
   if (SHOW_MAP)
     DrawMap(player);
+  printf("Digite 1 para gerar seu mapa randomicamente e 0 para construir um manualmente: ");
+  scanf(" %d", &map);
 
+  if (map) {
+    buildIA(player, player->name);
+    return;
+  }
   printf("Certo %s, vamos configurar seu mapa! primeiro posicione seu(s) %d submarino(s) (1 casa de espaço).\n", player->name, SUBMARINE);
   for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
     do {
@@ -101,10 +107,10 @@ void buildPlayer(Players *player)
   HideThings(player);
 
 }
-void buildIA(Players *player)
+void buildIA(Players *player, char *name)
 {
   int i, x, y, flag, pos;
-  strcpy(player->name, "Mr. Robot");
+  strcpy(player->name, name);
   x = 0;
   for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
     do {
@@ -120,7 +126,6 @@ void buildIA(Players *player)
     do {
       x = rand() % MAP_SIZE;
       y = rand() % MAP_SIZE;
-      pos = rand() % 2;
       flag = CheckDisponibility(x, y, 2, 2, pos, 1, player);
 
     } while (flag);
@@ -160,7 +165,7 @@ void buildIA(Players *player)
     Positioning(x, y, 1, 5, pos, 'A', player);
   }
 
-  HideThings(player);
+//  HideThings(player);
 
 }
 
@@ -187,7 +192,7 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
         if (count_p1 == TOTAL_SLOTS)
           return player1;
         DrawBoard(player1, player2);
-        printf("%s acertou uma posição, jogue novamente: ");
+        printf("%s acertou uma posição, jogue novamente: ", player1->name);
         guess = 1;
       } else {
         g_p1 = 1;
@@ -213,7 +218,7 @@ Players *guessEngine(Players *player1, Players *player2, int ia)
           printf("%s acertou uma posição, jogue novamente: ",  player2->name);
           guess = 0;
         } else {
-          count_p2 = 1;
+          g_p2 = 1;
           guess = 1;
           DrawBoard(player1, player2);
         }

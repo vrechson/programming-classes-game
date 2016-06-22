@@ -38,17 +38,6 @@
  *	Types
  ***********************************************************************/
 /* game types */
-/* typedef struct {
-    int id;
-    int type;
-    int width;
-    int height;
-    int x;
-    int y;
-    int rotation;
-    char style;
-    int status;
-} ship; */
 
 typedef struct {
   char presentation;
@@ -58,8 +47,6 @@ typedef struct {
 
 typedef struct Players {
     char name[30];
-    /*char map[MAP_SIZE][MAP_SIZE];*/
-    /*ship boats[TOTAL_SHIPS];*/
     board map[MAP_SIZE][MAP_SIZE];
 } Players;
 

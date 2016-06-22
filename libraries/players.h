@@ -15,7 +15,7 @@
  *	Protypes
  ***********************************************************************/
 void buildPlayer(Players *player);
-void buildIA(Players *player);
+void buildIA(Players *player,  char *name);
 Players *guessEngine(Players *player1, Players *player2, int ia);
 
 #endif

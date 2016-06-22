@@ -12,7 +12,7 @@
  ***********************************************************************/
 void buildPlayer(Players *player)
 {
-  int i, x, y, flag, next, map;
+  int i, x, y, flag, next, map, rot;
   char x_c;
 
   system(CLEAR);
@@ -57,13 +57,15 @@ void buildPlayer(Players *player)
     do {
       printf("Por favor, insira a linha e a coluna do seu %d craiser: ", i);
       scanf(" %c %d", &x_c, &y);
+      printf("você deseja rotacionar seu barco? (1 para sim, 0 para não): ");
+      scanf(" %d", &rot);
       x = Letter2Num(x_c);
 
-      flag = CheckDisponibility(x, y, 1, 2, 0, 0, player);
+      flag = CheckDisponibility(x, y, 1, 2, rot, 0, player);
 
     } while (flag);
 
-    Positioning(x, y, 1, 2, 0, 'C', player);
+    Positioning(x, y, 1, 2, rot, 'C', player);
   }
 
   printf("Partimos então para seu(s) %d destroyer(s).\n", DESTROYER);
@@ -71,13 +73,15 @@ void buildPlayer(Players *player)
     do {
       printf("Por favor, insira a linha e a coluna do seu %d destroyer: ", i);
       scanf(" %c %d", &x_c, &y);
+      printf("você deseja rotacionar seu barco? (1 para sim, 0 para não): ");
+      scanf(" %d", &rot);
       x = Letter2Num(x_c);
 
-      flag = CheckDisponibility(x, y, 1, 4, 0, 0, player);
+      flag = CheckDisponibility(x, y, 1, 4, rot, 0, player);
 
     } while (flag);
 
-    Positioning(x, y, 1, 4, 0, 'D', player);
+    Positioning(x, y, 1, 4, rot, 'D', player);
   }
 
   printf("Para finalizar inserimos seu(s) %d aircraft(s).\n", AIRCRAFT);
@@ -85,13 +89,15 @@ void buildPlayer(Players *player)
     do {
       printf("Por favor, insira a linha e a coluna do seu %d aircraft: ", i);
       scanf(" %c %d", &x_c, &y);
+      printf("você deseja rotacionar seu barco? (1 para sim, 0 para não): ");
+      scanf(" %d", &rot);
       x = Letter2Num(x_c);
 
-      flag = CheckDisponibility(x, y, 1, 5, 0, 0, player);
+      flag = CheckDisponibility(x, y, 1, 5, rot, 0, player);
 
     } while (flag);
 
-    Positioning(x, y, 1, 5, 0, 'A', player);
+    Positioning(x, y, 1, 5, rot, 'A', player);
   }
 
   next = 3;

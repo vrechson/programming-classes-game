@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
 
     do {
-      printf("\n\nPor favor, escolha o número de jogadores[1/2]: ");
+      printf("\n\nPor favor, escolha o número de jogadores [1/2]: ");
       scanf(" %d", &players);
       if (players < 1 || players > 2)
         printf("Você deve escolher entre um ou dois jogaroes, tente de novo.\n");

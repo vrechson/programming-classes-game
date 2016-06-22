@@ -1,5 +1,5 @@
 /*
- * This file must contain all functions related to the game board construction.
+ * This file must contain all functions game board related.
  */
 
 /*

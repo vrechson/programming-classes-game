@@ -23,36 +23,43 @@ int main(int argc, char *argv[])
 {
   Players player1, player2, *winner;
   int players;
+  char answer = 'y';
 
   srand((unsigned) time(NULL));
-
-  system(CLEAR);
-  InitializeMap(&player1);
-  InitializeMap(&player2);
-  DrawBoard(&player1, &player2);
-
-  printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
-
-  do {
-    printf("\n\nPor favor, escolha o número de jogadores[1/2]: ");
-    scanf(" %d", &players);
-    if (players < 1 || players > 2)
-      printf("Você deve escolher entre um ou dois jogaroes, tente de novo.\n");
-  } while (players < 1 || players > 2);
-
-  if (players == 1) {
-    buildPlayer(&player1);
-    buildIA(&player2);
+  while (answer == 'y' || answer == 'Y') {
+    system(CLEAR);
+    InitializeMap(&player1);
+    InitializeMap(&player2);
     DrawBoard(&player1, &player2);
-    DrawBoard(&player1, &player2);
-    winner = guessEngine(&player1, &player2, 1);
-  } else {
-    buildPlayer(&player1);
-    buildPlayer(&player2);
-    DrawBoard(&player1, &player2);
-    winner = guessEngine(&player1, &player2, 0);
+
+    printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
+
+    do {
+      printf("\n\nPor favor, escolha o número de jogadores[1/2]: ");
+      scanf(" %d", &players);
+      if (players < 1 || players > 2)
+        printf("Você deve escolher entre um ou dois jogaroes, tente de novo.\n");
+    } while (players < 1 || players > 2);
+
+    if (players == 1) {
+      buildPlayer(&player1);
+      buildIA(&player2, "Mr. Robot");
+      DrawBoard(&player1, &player2);
+      winner = guessEngine(&player1, &player2, 1);
+    } else {
+      buildPlayer(&player1);
+      buildPlayer(&player2);
+      DrawBoard(&player1, &player2);
+      winner = guessEngine(&player1, &player2, 0);
+    }
+
+    answer = 'j';
+    printf("%s ganhou o jogo!\n\n", winner->name);
+    while (answer != 'y' && answer != 'Y' && answer != 'n' && answer != 'N') {
+      printf("deseja jogar novamente? (y/n): ");
+      scanf(" %c", &answer);
+    }
   }
 
-  printf(" %s ganhou o jogo! deseja jogar novamente? (y/n)", winner->name);
   return 0;
 }

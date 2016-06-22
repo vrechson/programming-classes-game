@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
   srand((unsigned) time(NULL));
   while (answer == 'y' || answer == 'Y') {
     system(CLEAR);
-    InitializeMap(&player1);
-    InitializeMap(&player2);
-    DrawBoard(&player1, &player2);
+    init_map(&player1);
+    init_map(&player2);
+    draw_board(&player1, &player2);
 
     printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
 
@@ -42,15 +42,15 @@ int main(int argc, char *argv[])
     } while (players < 1 || players > 2);
 
     if (players == 1) {
-      buildPlayer(&player1);
-      buildIA(&player2, "Mr. Robot");
-      DrawBoard(&player1, &player2);
-      winner = guessEngine(&player1, &player2, 1);
+      build_player(&player1);
+      build_ai(&player2, "Mr. Robot");
+      draw_board(&player1, &player2);
+      winner = guess_eng(&player1, &player2, 1);
     } else {
-      buildPlayer(&player1);
-      buildPlayer(&player2);
-      DrawBoard(&player1, &player2);
-      winner = guessEngine(&player1, &player2, 0);
+      build_player(&player1);
+      build_player(&player2);
+      draw_board(&player1, &player2);
+      winner = guess_eng(&player1, &player2, 0);
     }
 
     answer = 'j';

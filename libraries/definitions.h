@@ -32,7 +32,7 @@
   #define CLEAR "cls"
 #endif
 
-#define VERSION 1.01
+#define VERSION 1.02
 
 /*
  *	Types
@@ -46,7 +46,7 @@ typedef struct {
 } board;
 
 typedef struct Players {
-    char name[30];
+    char name[50];
     board map[MAP_SIZE][MAP_SIZE];
 } Players;
 

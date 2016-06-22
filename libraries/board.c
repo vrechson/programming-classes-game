@@ -9,7 +9,7 @@
 /*
  *	FUnctions
  ***********************************************************************/
-void DrawBoard(Players *player1, Players *player2)
+void draw_board(Players *player1, Players *player2)
 {
   int i, j, k, l;
 
@@ -63,7 +63,7 @@ void DrawBoard(Players *player1, Players *player2)
 
 }
 
-void DrawMap(Players *player)
+void draw_map(Players *player)
 {
   int i, j, k;
 
@@ -92,7 +92,7 @@ void DrawMap(Players *player)
   printf("\n");
 }
 
-void InitializeMap(Players *player)
+void init_map(Players *player)
 {
   int i, j;
   for (i = 0; i < MAP_SIZE; i++)
@@ -103,7 +103,7 @@ void InitializeMap(Players *player)
     }
 }
 
-void HideThings(Players *player)
+void hide_ships(Players *player)
 {
   int i, j;
 
@@ -113,7 +113,7 @@ void HideThings(Players *player)
 
 }
 
-int Letter2Num(char x) {
+int carac_2_num(char x) {
   if (x > 64 && x <= (64 + MAP_SIZE))
     return (int) (x -= 64);
   else if ((x > 96) && x <= (96 + MAP_SIZE))
@@ -122,7 +122,7 @@ int Letter2Num(char x) {
     return MAP_SIZE + 10;
 }
 
-int CheckDisponibility(int x, int y, int height, int width, int rotation, int ia, Players *player)
+int check_pos(int x, int y, int height, int width, int rotation, int ia, Players *player)
 {
   int i, j, aux;
 
@@ -147,7 +147,7 @@ int CheckDisponibility(int x, int y, int height, int width, int rotation, int ia
   return 0;
 }
 
-void Positioning(int x, int y, int height, int width, int rotation, char style, Players *player)
+void pos_s(int x, int y, int height, int width, int rotation, char style, Players *player)
 {
   int i, j, aux;
 
@@ -163,11 +163,11 @@ void Positioning(int x, int y, int height, int width, int rotation, char style, 
     }
 
   if (SHOW_MAP)
-    DrawMap(player);
+    draw_map(player);
 
 }
 
-int PosBombing(int x, int y, Players *player)
+int hit_pos(int x, int y, Players *player)
 {
   if (player->map[x - 1][y - 1].presentation != WATER && player->map[x - 1][y - 1].presentation != EMPTY) {
     player->map[x - 1][y - 1].isVisible = 1;
@@ -181,7 +181,7 @@ int PosBombing(int x, int y, Players *player)
 
 }
 
-int IABombing(Players *player)
+int ai_hit_pos(Players *player)
 {
   static int count = -1, x, y;
   int index1, index2;
@@ -213,29 +213,37 @@ int IABombing(Players *player)
       return 0;
     }
   } else {
-    index1 = rand() % 2;
-    index2 = rand() % 2;
     x = rand() % MAP_SIZE;
     y = rand() % MAP_SIZE;
-    if (!index1)
-      index1 = -1;
-    if (!index2)
-      index2 = -1;
-    if (x == (MAP_SIZE - 1))
-      index1 = -1;
-    if (y == (MAP_SIZE - 1))
-      index2 = -1;
 
-    if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
-      player->map[x + index1][y + index2].isVisible = 1;
-      //DrawMap(player);
+    if (player->map[x][y].presentation != WATER && player->map[x][y].presentation != EMPTY) {
+      player->map[x][y].isVisible = 1;
+      //draw_map(player);
       return 1;
     } else {
-      player->map[x + index1][y + index2].presentation = EMPTY;
-      player->map[x + index1][y + index2].background = EMPTY;
-      player->map[x - 1][y - 1].isVisible = 1;
-      return 0;
+      index1 = rand() % 2;
+      index2 = rand() % 2;
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
+      if (!index1)
+        index1 = -1;
+      if (!index2)
+        index2 = -1;
+      if (x == (MAP_SIZE - 1))
+        index1 = -1;
+      if (y == (MAP_SIZE - 1))
+        index2 = -1;
+
+      if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
+        player->map[x + index1][y + index2].isVisible = 1;
+        //draw_map(player);
+        return 1;
+      } else {
+        player->map[x + index1][y + index2].presentation = EMPTY;
+        player->map[x + index1][y + index2].background = EMPTY;
+        player->map[x - 1][y - 1].isVisible = 1;
+        return 0;
+      }
     }
   }
-
 }

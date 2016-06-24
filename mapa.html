@@ -15,24 +15,24 @@
 				<h1 id="header-title"></h1>
 			</div>
       <div id="board-container">
-        <div id="map1" class="ship-board">
-          <div id="player1-name" class="name-container">
-            <input id="Player1-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
+        <div id="map2" class="ship-board">
+          <div id="player2-name" class="name-container">
+            <input id="Player2-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
           </div>
           <div id="map-container" class="map-container-box">
             <table>
-              <tr class="map-line">
-                <td class="map-n"></td>
-                <td class="map-n">A</td>
-                <td class="map-n">B</td>
-                <td class="map-n">C</td>
-                <td class="map-n">D</td>
-                <td class="map-n">E</td>
-                <td class="map-n">F</td>
-                <td class="map-n">G</td>
-                <td class="map-n">H</td>
-                <td class="map-n">I</td>
-                <td class="map-n">J</td>
+              <tr class="map-line map-letters">
+                <td class="map-n coor"></td>
+                <td class="map-n coor">A</td>
+                <td class="map-n coor">B</td>
+                <td class="map-n coor">C</td>
+                <td class="map-n coor">D</td>
+                <td class="map-n coor">E</td>
+                <td class="map-n coor">F</td>
+                <td class="map-n coor">G</td>
+                <td class="map-n coor">H</td>
+                <td class="map-n coor">I</td>
+                <td class="map-n coor">J</td>
               </tr>
               <tr class="map-line">
                 <td class="map-n">1</td>
@@ -50,11 +50,11 @@
               <tr class="map-line">
                 <td class="map-n">2</td>
                 <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
+                <td class="map-column">X</td>
+                <td class="map-column">X</td>
+                <td class="map-column">X</td>
+                <td class="map-column">X</td>
+                <td class="map-column">X</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
@@ -92,7 +92,7 @@
                 <td class="map-column"></td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
-                <td class="map-column"></td>
+                <td class="map-column">X</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
@@ -102,10 +102,10 @@
               <tr class="map-line">
                 <td class="map-n">6</td>
                 <td class="map-column"></td>
+                <td class="map-column">*</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
+                <td class="map-column">X</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
@@ -118,20 +118,20 @@
                 <td class="map-column"></td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
+                <td class="map-column">X</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
+                <td class="map-column">*</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
               </tr>
               <tr class="map-line">
                 <td class="map-n">8</td>
                 <td class="map-column"></td>
+                <td class="map-column">*</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
-                <td class="map-column"></td>
-                <td class="map-column"></td>
+                <td class="map-column">X</td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
                 <td class="map-column"></td>
@@ -166,12 +166,163 @@
               </tr>
             </table>
           </div>
+					<div id="button1r243" class="generate-map">
+						<button type="button" class="button-dialog gen-map">Gerar novo mapa</button>
+					</div>
         </div>
-        <div id="map2" class="ship-board">
-          <div id="player2" class="name-container">
+				<div id="map1" class="ship-board">
+          <div id="player1-name" class="name-container">
+            <input id="Player1-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
+          </div>
+          <div id="map-container" class="map-container-box">
+            <table>
+              <tr class="map-line map-letters">
+                <td class="map-n coor"></td>
+                <td class="map-n  coor">A</td>
+                <td class="map-n  coor">B</td>
+                <td class="map-n  coor">C</td>
+                <td class="map-n  coor">D</td>
+                <td class="map-n  coor">E</td>
+                <td class="map-n  coor">F</td>
+                <td class="map-n  coor">G</td>
+                <td class="map-n  coor">H</td>
+                <td class="map-n  coor">I</td>
+                <td class="map-n  coor">J</td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">1</td>
+                <td class="map-column">X</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">2</td>
+                <td class="map-column">X</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">3</td>
+                <td class="map-column">X</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">4</td>
+                <td class="map-column">X</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column">X</td>
+                <td class="map-column">X</td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">5</td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column">X</td>
+                <td class="map-column">X</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">6</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">7</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">8</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column">*</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">9</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+              <tr class="map-line">
+                <td class="map-n">10</td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+                <td class="map-column"></td>
+              </tr>
+            </table>
           </div>
         </div>
-      </div>
+  		</div>
 		</div>
 	</body>
 </html>

@@ -27,19 +27,19 @@ int main(int argc, char *argv[])
 
   srand((unsigned) time(NULL));
   while (answer == 'y' || answer == 'Y') {
-    system(CLEAR);
+    //system(CLEAR);
     init_map(&player1);
     init_map(&player2);
-    draw_board(&player1, &player2);
+    //draw_board(&player1, &player2);
 
-    printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
-
-    do {
+    //printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
+    players = show_menu();
+    /*do {
       printf("\n\nPor favor, escolha o número de jogadores [1/2]: ");
       scanf(" %d", &players);
       if (players < 1 || players > 2)
         printf("Você deve escolher entre um ou dois jogaroes, tente de novo.\n");
-    } while (players < 1 || players > 2);
+    } while (players < 1 || players > 2);*/
 
     if (players == 1) {
       build_player(&player1);

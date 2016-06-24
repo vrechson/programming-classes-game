@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="css/navalb.css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 		<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 	</head>
 	<body id="mapa">
@@ -15,9 +16,15 @@
 				<h1 id="header-title"></h1>
 			</div>
       <div id="board-container">
-        <div id="map2" class="ship-board">
-          <div id="player2-name" class="name-container">
-            <input id="Player2-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
+        <div id="map1" class="ship-board">
+          <div id="player1-name" class="name-container">
+						<div>
+	            <input id="Player1-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
+							<button type="button" class="button-dialog name-dialog"><a class="fa fa-angle-right"></a></button>
+						</div>
+						<div class="player-name">
+							<span id="player1-span"></span>
+						</div>
           </div>
           <div id="map-container" class="map-container-box">
             <table>
@@ -169,10 +176,19 @@
 					<div id="button1r243" class="generate-map">
 						<button type="button" class="button-dialog gen-map">Gerar novo mapa</button>
 					</div>
+					<div id="button233r243" class="generate-map">
+						<button type="button" class="button-dialog jogar">Jogar</button>
+					</div>
         </div>
-				<div id="map1" class="ship-board">
-          <div id="player1-name" class="name-container">
-            <input id="Player1-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
+				<div id="map2" class="ship-board">
+					<div id="player2-name" class="name-container">
+						<div>
+	            <input id="Player2-input" class="input-properties" placeholder="Insira seu nome" autocomplete="off" type="text"></input>
+							<button type="button" class="button-dialog name-dialog"><a class="fa fa-angle-right"></a></button>
+						</div>
+						<div class="player-name">
+							<span id="player2-span"></span>
+						</div>
           </div>
           <div id="map-container" class="map-container-box">
             <table>
@@ -321,6 +337,12 @@
               </tr>
             </table>
           </div>
+					<div id="button233r243" class="generate-map">
+						<button type="button" class="button-dialog gen-map">Gerar novo mapa</button>
+					</div>
+					<div id="button233r243" class="generate-map">
+						<button type="button" class="button-dialog jogar">Jogar</button>
+					</div>
         </div>
   		</div>
 		</div>

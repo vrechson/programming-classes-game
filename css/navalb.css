@@ -34,7 +34,7 @@ td.map-n:not(.coor) {
 }
 
 .map-column {
-border: 1px solid black;
+	border: 1px solid black;
 }
 
 .map-container-box {
@@ -56,7 +56,8 @@ border: 1px solid black;
 }
 .input-properties {
   display: block;
-  width: 100%;
+	float: left;
+  width: 80%;
   font-size: 25px;
   line-height: 40px;
   background: 0 0;
@@ -98,21 +99,60 @@ border: 1px solid black;
 	height: 80px;
 	margin: 0px auto;
 	margin-bottom: 10px;
-	background: #3A4D6D;
+	background: rgb(57, 73, 89);
 	width: 100%;
 	font-size: 30px;
-	color: #D5C7AD;
+	color: #ADB0B5;
 	text-decoration: none;
 	border: none;
 	border-radius: 4px;
 	letter-spacing: 1px;
 }
 
-.gen-map {
+.gen-map, .jogar {
 	height: 45px;
 	font-size: 20px;
 	margin-bottom: 0px;
 	border-radius: 0px;
-	background: #394959;
+}
+
+.gen-map {
+	background: rgb(57, 73, 89);
 	color: #ADB0B5;
+}
+
+.gen-map:hover, .name-dialog:hover, .button-dialog:hover {
+	background: #425564;
+}
+
+.jogar {
+	background: rgb(167, 209, 137) none repeat scroll 0% 0%;
+	color: rgb(39, 56, 63);
+}
+
+.jogar:hover{
+	background: rgb(177, 218, 148)  none repeat scroll 0% 0%;
+	color: #425564;
+}
+
+.name-dialog {
+	width: 10%;
+	height: 50px;
+	margin-bottom: 0px;
+	border-radius: 0px;
+	float: right;
+	background: rgb(57, 73, 89) none repeat scroll 0% 0%;
+}
+
+.name-dialog > a {
+	color: rgb(173, 176, 181);
+}
+
+.player-name {
+	float: left;
+	width: 100%;
+	display: none;
+	font-size: 25px;
+	padding: 10px;
+	font-family: inherit;
 }

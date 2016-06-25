@@ -13,8 +13,9 @@
 #include <string.h>
 #include <time.h>
 #include "libraries/board.h"
-#include "libraries/definitions.h"
 #include "libraries/players.h"
+#include "libraries/definitions.h"
+#include "libraries/web_content.h"
 
 /*
  *	Main
@@ -23,9 +24,12 @@ int main(int argc, char *argv[])
 {
   Players player1, player2, *winner;
   int players;
-  char answer = 'y';
+  char answer = 'y', *get_p, arg[100];
 
   srand((unsigned) time(NULL));
+
+  printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
+
   while (answer == 'y' || answer == 'Y') {
     //system(CLEAR);
     init_map(&player1);
@@ -33,13 +37,19 @@ int main(int argc, char *argv[])
     //draw_board(&player1, &player2);
 
     //printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
-    players = show_menu();
-    /*do {
-      printf("\n\nPor favor, escolha o número de jogadores [1/2]: ");
-      scanf(" %d", &players);
-      if (players < 1 || players > 2)
-        printf("Você deve escolher entre um ou dois jogaroes, tente de novo.\n");
-    } while (players < 1 || players > 2);*/
+    show_menu();
+    get_p = getenv("QUERY_STRING");
+
+    if (sscanf(get_p, "build=%s", arg) == 1) {
+      if(strcmp(get_p, "single")) {
+        build_player(&player1);
+    //    build_ai(&player2);
+      } else if (strcmp(get_p, "multi")) {
+        build_player(&player1);
+    //    build_player(&player2, AI_NAME);
+      }
+    }
+    return 0;
 
     if (players == 1) {
       build_player(&player1);

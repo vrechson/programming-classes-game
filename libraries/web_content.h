@@ -14,4 +14,5 @@
  *	Prototypes
  ***********************************************************************/
 void show_menu();
+void player_builder();
 #endif

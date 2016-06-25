@@ -14,11 +14,12 @@ void build_player(Players *player)
 {
   int i, x, y, flag, next, map, rot;
   char x_c;
-
-  system(CLEAR);
+  player_builder();
+  return;
+  //system(CLEAR);
   printf("Vamos começar! Insira seu nome: ");
   scanf(" %49[^\n]s", player->name);
-  system(CLEAR);
+  // system(CLEAR);
 
   if (SHOW_MAP)
     draw_map(player);

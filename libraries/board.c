@@ -134,7 +134,8 @@ int check_pos(int x, int y, int height, int width, int rotation, int ia, Players
 
   for (i = 0; i < height; i++)
     for (j = 0; j < width; j++)
-      if (((y + j - 1) > (MAP_SIZE - 1)) || ((x + i - 1) > (MAP_SIZE - 1)) || ((y + j - 1) < 0) || ((x + i - 1) < 0)) {
+      if (((y + j - 1) > (MAP_SIZE - 1)) || ((x + i - 1) >
+       (MAP_SIZE - 1)) || ((y + j - 1) < 0) || ((x + i - 1) < 0)) {
         if (!ia)
           printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
         return 1;

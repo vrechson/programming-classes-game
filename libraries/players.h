@@ -10,6 +10,7 @@
 
 #include "definitions.h"
 #include "board.h"
+#include "web_content.h"
 
 /*
  *	Protypes

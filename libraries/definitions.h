@@ -23,7 +23,8 @@
 #define MAP_SIZE 10 // size of the map
 #define WATER 'X'
 #define SHOT 'O'
-#define EMPTY '.'
+#define EMPTY '*'
+#define AI_NAME "Mr. Robot"
 
 /* OS configurations */
 #ifdef __unix__

@@ -4,121 +4,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include "players.h"
 
 
 /*
  *	Functions
  ***********************************************************************/
-void build_player(Players *player)
+void build_game(int args, ...)
 {
-  int i, x, y, flag, next, map, rot;
-  char x_c;
+  va_list ap;
+  Players *player[4];
+  int i;
 
-/*  if (strcmp(player->name, NULL) == 0)
-    strcpy(player->name, "undefined"); */
+  va_start(ap, args);
 
-  build_ai(player, player->name);
-  player_builder(player);
-  return;
-  //system(CLEAR);
-  printf("Vamos começar! Insira seu nome: ");
-  scanf(" %49[^\n]s", player->name);
-  // system(CLEAR);
+  dom_head();
 
-  if (SHOW_MAP)
-    draw_map(player);
-  printf("Digite 1 para gerar seu mapa randomicamente e 0 para construir um manualmente: ");
-  scanf(" %d", &map);
+  printf(
 
-  if (map) {
-    build_ai(player, player->name);
-    return;
-  }
-  printf("Certo %s, vamos configurar seu mapa! primeiro posicione seu(s) %d submarino(s) (1 casa de espaço).\n", player->name, SUBMARINE);
-  for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
-    do {
-      printf("por favor, insira a linha(letra) e a coluna(número) do seu %d submarino, respectvamente: ", i);
-      scanf(" %c %d", &x_c, &y);
-      x = carac_2_num(x_c);
-      flag = check_pos(x, y, 1, 1, 0, 0, player);
-    } while (flag);
-    pos_s(x, y, 1, 1, 0, 'S', player);
+  "	<body id=\"mapa\">\n"
+  "		<div id=\"document-container\">\n"
+  "			<div id=\"header-container\">\n"
+  "				<h1 id=\"header-title\"></h1>\n"
+  "			</div>\n"
+  "      <div id=\"board-container\">\n"
+
+  );
+
+  for (i = 0; i < args; ++i) {
+    player[i] = va_arg(ap, Players *);
+    build_ai(player[i], player[i]->name);
+    add_board(player[i]);
   }
 
-  printf("Agora vamos posicionar seu(s) %d battleship(s).\n", BATTLESHIP);
-  for (i = 1, flag = 0; i <= BATTLESHIP; i++, flag = 0) {
-    do {
-      printf("Por favor, insira a linha e a coluna do seu %d battleship: ", i);
-      scanf(" %c %d", &x_c, &y);
-      x = carac_2_num(x_c);
-      flag = check_pos(x, y, 2, 2, 0, 0, player);
+  printf(
+  "  		</div>\n"
+  "		</div>\n"
+  "	</body>\n"
+  "</html>\n"
+  );
 
-    } while (flag);
-    pos_s(x, y, 2, 2, 0, 'B', player);
-  }
 
-  printf("O próximo passo é alocar seu(s) %d craiser(s).\n", CRAISER);
-  for (i = 1, flag = 0; i <= CRAISER; i++, flag = 0) {
-    do {
-      printf("Por favor, insira a linha e a coluna do seu %d craiser: ", i);
-      scanf(" %c %d", &x_c, &y);
-      printf("você deseja rotacionar seu barco? (1 para sim, 0 para não): ");
-      scanf(" %d", &rot);
-      x = carac_2_num(x_c);
 
-      flag = check_pos(x, y, 1, 2, rot, 0, player);
-
-    } while (flag);
-
-    pos_s(x, y, 1, 2, rot, 'C', player);
-  }
-
-  printf("Partimos então para seu(s) %d destroyer(s).\n", DESTROYER);
-  for (i = 1, flag = 0; i <= DESTROYER; i++, flag = 0) {
-    do {
-      printf("Por favor, insira a linha e a coluna do seu %d destroyer: ", i);
-      scanf(" %c %d", &x_c, &y);
-      printf("você deseja rotacionar seu barco? (1 para sim, 0 para não): ");
-      scanf(" %d", &rot);
-      x = carac_2_num(x_c);
-
-      flag = check_pos(x, y, 1, 4, rot, 0, player);
-
-    } while (flag);
-
-    pos_s(x, y, 1, 4, rot, 'D', player);
-  }
-
-  printf("Para finalizar inserimos seu(s) %d aircraft(s).\n", AIRCRAFT);
-  for (i = 1, flag = 0; i <= AIRCRAFT; i++, flag = 0) {
-    do {
-      printf("Por favor, insira a linha e a coluna do seu %d aircraft: ", i);
-      scanf(" %c %d", &x_c, &y);
-      printf("você deseja rotacionar seu barco? (1 para sim, 0 para não): ");
-      scanf(" %d", &rot);
-      x = carac_2_num(x_c);
-
-      flag = check_pos(x, y, 1, 5, rot, 0, player);
-
-    } while (flag);
-
-    pos_s(x, y, 1, 5, rot, 'A', player);
-  }
-
-  next = 3;
-  while (next != 1) {
-    if (!next) {
-      init_map(player);
-      build_player(player);
-    }
-    printf("Mapa finalizado, digite 1 para continuar e 0 para refazer seu tabuleiro: ");
-    scanf(" %d", &next);
-  }
-
-  hide_ships(player);
+//  hide_ships(player);
 
 }
+
 void build_ai(Players *player, char *name)
 {
   int i, x, y, flag, pos;

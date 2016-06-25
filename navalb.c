@@ -22,7 +22,7 @@
  ***********************************************************************/
 int main(int argc, char *argv[])
 {
-  Players player1, player2, *winner;
+  Players player1, player2, player3, player4;
   int players;
   char answer = 'y', *get_p, arg[100];
 
@@ -30,44 +30,31 @@ int main(int argc, char *argv[])
 
   printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
 
-    //system(CLEAR);
     init_map(&player1);
     init_map(&player2);
-    //draw_board(&player1, &player2);
+    init_map(&player3);
+    init_map(&player4);
 
-    //printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
     get_p = getenv("QUERY_STRING");
 
     if (sscanf(get_p, "build=%s", arg) == 1) {
-      if(strcmp(get_p, "single")) {
-        build_player(&player1);
-    //    build_ai(&player2);
+      if(strcmp(arg, "single")) {
+        build_game(1, &player1);
+      } else if (strcmp(arg, "two")) {
+        build_game(2, &player1, &player2);
+      } else if (strcmp(arg, "three")) {
+        build_game(3, &player1, &player2, &player3);
+      } else if (strcmp(arg, "multi")) {
+        build_game(4, &player1, &player2, &player3, &player4);
+      } else {
+        show_menu();
       }
-    } else if (strcmp(get_p, "multi") == 1) {
-        build_player(&player1);
-    //    build_player(&player2, AI_NAME);
-    }  else if (strcmp(get_p, "multi") == 0) {
-        show_menu();
     } else {
-      if(!strcmp(get_p, "single") || !strcmp(get_p, "single"))
-        show_menu();
+      show_menu();
     }
     return 0;
 
-    if (players == 1) {
-      build_player(&player1);
-      build_ai(&player2, "Mr. Robot");
-      draw_board(&player1, &player2);
-      winner = guess_eng(&player1, &player2, 1);
-    } else {
-      build_player(&player1);
-      build_player(&player2);
-      draw_board(&player1, &player2);
-      winner = guess_eng(&player1, &player2, 0);
-    }
 
-    answer = 'j';
-    printf("%s ganhou o jogo!\n\n", winner->name);
 
 
   return 0;

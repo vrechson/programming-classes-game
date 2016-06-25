@@ -159,3 +159,7 @@ td.map-n:not(.coor) {
 	padding: 10px;
 	font-family: inherit;
 }
+
+.gen-map, .generate-map {
+	display: none;
+}

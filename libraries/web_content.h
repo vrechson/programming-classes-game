@@ -8,6 +8,7 @@
 #ifndef _WEB_CONTENT_H_
 #define _WEB_CONTENT_H_
 
+#include <stdarg.h>
 #include "definitions.h"
 
 /*
@@ -15,5 +16,5 @@
  ***********************************************************************/
 void dom_head();
 void show_menu();
-void player_builder(Players *player);
+void add_board(Players *player);
 #endif

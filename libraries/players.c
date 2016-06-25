@@ -14,7 +14,12 @@ void build_player(Players *player)
 {
   int i, x, y, flag, next, map, rot;
   char x_c;
-  player_builder();
+
+/*  if (strcmp(player->name, NULL) == 0)
+    strcpy(player->name, "undefined"); */
+
+  build_ai(player, player->name);
+  player_builder(player);
   return;
   //system(CLEAR);
   printf("Vamos começar! Insira seu nome: ");
@@ -172,8 +177,7 @@ void build_ai(Players *player, char *name)
     pos_s(x, y, 1, 5, pos, 'A', player);
   }
 
-  hide_ships(player);
-
+//  hide_ships(player);
 }
 
 Players *guess_eng(Players *player1, Players *player2, int ia)

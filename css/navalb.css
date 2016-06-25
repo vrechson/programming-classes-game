@@ -36,6 +36,9 @@ td.map-n:not(.coor) {
 .map-column {
 	border: 1px solid black;
 }
+.orange {
+	background: rgba(215, 95, 86, 0.68) none repeat scroll 0% 0%;
+}
 
 .map-container-box {
 	padding: 40px

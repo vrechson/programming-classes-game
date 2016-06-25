@@ -30,24 +30,27 @@ int main(int argc, char *argv[])
 
   printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
 
-  while (answer == 'y' || answer == 'Y') {
     //system(CLEAR);
     init_map(&player1);
     init_map(&player2);
     //draw_board(&player1, &player2);
 
     //printf("Bem vindo ao %s, versão %.2f\n\n", argv[0], VERSION);
-    show_menu();
     get_p = getenv("QUERY_STRING");
 
     if (sscanf(get_p, "build=%s", arg) == 1) {
       if(strcmp(get_p, "single")) {
         build_player(&player1);
     //    build_ai(&player2);
-      } else if (strcmp(get_p, "multi")) {
+      }
+    } else if (strcmp(get_p, "multi") == 1) {
         build_player(&player1);
     //    build_player(&player2, AI_NAME);
-      }
+    }  else if (strcmp(get_p, "multi") == 0) {
+        show_menu();
+    } else {
+      if(!strcmp(get_p, "single") || !strcmp(get_p, "single"))
+        show_menu();
     }
     return 0;
 
@@ -65,11 +68,7 @@ int main(int argc, char *argv[])
 
     answer = 'j';
     printf("%s ganhou o jogo!\n\n", winner->name);
-    while (answer != 'y' && answer != 'Y' && answer != 'n' && answer != 'N') {
-      printf("deseja jogar novamente? (y/n): ");
-      scanf(" %c", &answer);
-    }
-  }
+
 
   return 0;
 }

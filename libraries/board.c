@@ -163,9 +163,6 @@ void pos_s(int x, int y, int height, int width, int rotation, char style, Player
       player->map[x + i - 1][y + j - 1].presentation = style;
     }
 
-  if (SHOW_MAP)
-    draw_map(player);
-
 }
 
 int hit_pos(int x, int y, Players *player)

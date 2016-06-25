@@ -13,6 +13,7 @@
 /*
  *	Prototypes
  ***********************************************************************/
+void dom_head();
 void show_menu();
-void player_builder();
+void player_builder(Players *player);
 #endif

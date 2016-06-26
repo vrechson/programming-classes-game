@@ -142,35 +142,82 @@ void add_board(Players *player, int mode, int index)
     printf(
     "            </table>\n"
     "          </div>\n"
-    "					<div id=\"button233r243\" class=\"generate-map\">\n"
-    "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
-    "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
-    "           </a>\n"
-    "					</div>\n"
-    "					<div id=\"button233r243\" class=\"generate-map\">\n", mode, index, player->name
     );
     if (mode == 1 && index == 0) {
       printf(
+      "					<div id=\"button233r243\" class=\"generate-map\">\n"
+      "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
+      "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
+      "           </a>\n"
+      "					</div>\n"
+      "					<div id=\"button233r243\" class=\"generate-map\">\n"
       "						<a href=\"?mode=%d\">\n"
       "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
-      "						</a>\n", 3
+      "						</a>\n"
+      "					</div>\n", mode, index, player->name, 3
       );
     } else  if (mode == 2 && index == 0) {
       printf(
+      "					<div id=\"button233r243\" class=\"generate-map\">\n"
+      "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
+      "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
+      "           </a>\n"
+      "					</div>\n"
+      "					<div id=\"button233r243\" class=\"generate-map\">\n"
       "						<a href=\"?mode=%d&build=%d&name=%s\">\n"
       "						 <button type=\"button\" class=\"button-dialog jogar\">Player 2</button>\n"
-      "						</a>\n", mode, (index + 1), "player2"
+      "						</a>\n"
+      "					</div>\n", mode, index, player->name, mode, (index + 1), "player2"
       );
-    } else {
+    } else  if (mode == 2 && index == 0){
       printf(
+      "					<div id=\"button233r243\" class=\"generate-map\">\n"
+      "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
+      "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
+      "           </a>\n"
+      "					</div>\n"
       "						<a href=\"?mode=%d\">\n"
       "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
-      "						</a>\n", 3
+      "						</a>\n", mode, index, player->name, 3
       );
     }
 
     printf(
-    "					</div>\n"
     "        </div>\n"
     );
+}
+
+void draw_board(int args, ...)
+{
+  int i;
+  va_list ap;
+  Players player;
+
+  va_start(ap, args);
+
+  dom_head();
+
+  printf(
+
+  "	<body id=\"mapa\">\n"
+  "		<div id=\"document-container\">\n"
+  "			<div id=\"header-container\">\n"
+  "				<h1 id=\"header-title\"></h1>\n"
+  "			</div>\n"
+  "      <div id=\"board-container\">\n"
+
+  );
+
+  for (i = 0; i < args; i++) {
+    player = va_arg(ap, Players);
+    get_log(&player, i);
+    add_board(&player, 3, 0);
+  }
+
+  printf(
+  "  		</div>\n"
+  "		</div>\n"
+  "	</body>\n"
+  "</html>\n"
+  );
 }

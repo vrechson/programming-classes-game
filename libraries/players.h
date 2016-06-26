@@ -16,8 +16,9 @@
 /*
  *	Protypes
  ***********************************************************************/
-void build_game(int args, ...);
+void build_player(int mode, int index, char name[]);
 void build_ai(Players *player,  char *name);
-Players *guess_eng(Players *player1, Players *player2, int ia);
+void build_map(Players *player, char *name);
+//Players *guess_eng(Players *player1, Players *player2, int ia);
 
 #endif

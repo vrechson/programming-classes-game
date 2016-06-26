@@ -42,7 +42,6 @@
 
 typedef struct {
   char presentation;
-  char background;
   int isVisible;
 } board;
 

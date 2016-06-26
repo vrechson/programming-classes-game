@@ -9,96 +9,12 @@
 /*
  *	FUnctions
  ***********************************************************************/
-void draw_board(Players *player1, Players *player2)
-{
-  int i, j, k, l;
-
-  system(CLEAR);
-  printf("\n");
-
-  for (i = 0, k = 64; i <= MAP_SIZE; i++, k++, printf("\n"))
-    for (j = 0, l = 1; j <= ((2 * MAP_SIZE) + 1); j++)
-      if (!i && j) {
-        if (j == (MAP_SIZE + 1)) {
-          l = 1;
-          printf("\t");
-          printf("%3c", ' ');
-        } else {
-          printf("%3d", l++);
-        }
-      } else if (i && (!j || j == (MAP_SIZE + 1))){
-        if (j == MAP_SIZE + 1)
-          printf("\t");
-        printf("%3c", k);
-      } else if (i && j) {
-        if(j <= MAP_SIZE) {
-          if (LEVEL && player2->map[i - 1][j - 1].presentation != WATER && player2->map[i - 1][j - 1].presentation != EMPTY) {
-            if(player1->map[i - 1][j - 1].isVisible)
-              printf("%3c", SHOT);
-            else
-              printf("%3c", player1->map[i - 1][j - 1].background);
-          } else {
-            if(player1->map[i - 1][j - 1].isVisible)
-              printf("%3c", player1->map[i - 1][j - 1].presentation);
-            else
-              printf("%3c", player1->map[i - 1][j - 1].background);
-          }
-        } else {
-          if (LEVEL && player2->map[i - 1][j - MAP_SIZE - 2].presentation != WATER && player2->map[i - 1][j - MAP_SIZE - 2].presentation != EMPTY)
-            if(player2->map[i - 1][j - MAP_SIZE - 2].isVisible)
-              printf("%3c", SHOT);
-            else
-              printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].background);
-          else
-            if(player2->map[i - 1][j - MAP_SIZE - 2].isVisible)
-              printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].presentation);
-            else
-              printf("%3c", player2->map[i - 1][j - MAP_SIZE - 2].background);
-        }
-      } else {
-        printf("%3c", ' ');
-      }
-
-    printf("\n");
-
-}
-
-void draw_map(Players *player)
-{
-  int i, j, k;
-
-  system(CLEAR);
-  for (i = 0, k = 64, printf("\n"); i <= MAP_SIZE; i++, k++, printf("\n"))
-    for (j = 0; j <= MAP_SIZE; j++)
-      if(i == 0 && j) {
-        printf("%3d", j);
-      } else if(i != 0 && j == 0) {
-        printf("%3c", k);
-      } else if(i != 0) {
-        if(LEVEL && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY) {
-          if (player->map[i - 1][j - 1].isVisible)
-            printf("%3c", SHOT);
-          else
-            printf("%3c", player->map[i - 1][j - 1].background);
-        } else {
-          if (player->map[i - 1][j - 1].isVisible)
-            printf("%3c", player->map[i - 1][j - 1].presentation);
-          else
-            printf("%3c", player->map[i - 1][j - 1].background);
-        }
-      } else {
-        printf("%3c", ' ');
-      }
-  printf("\n");
-}
-
 void init_map(Players *player)
 {
   int i, j;
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
       player->map[i][j].presentation = WATER;
-      player->map[i][j].background = WATER;
       player->map[i][j].isVisible = 1;
     }
 }
@@ -113,13 +29,41 @@ void hide_ships(Players *player)
 
 }
 
-int carac_2_num(char x) {
-  if (x > 64 && x <= (64 + MAP_SIZE))
-    return (int) (x -= 64);
-  else if ((x > 96) && x <= (96 + MAP_SIZE))
-    return (int)(x -= 96);
-  else
-    return MAP_SIZE + 10;
+
+/*void get_log(Players *player, int n)
+{
+
+  int i, j;
+  char filename[2][20] = {"player1.log", "player2.log"};
+  FILE *stream;
+
+  stream = fopen(filename[n], "r");
+
+  for (i = 0; i < MAP_SIZE; i++, fprintf(stream, "\n"))
+    for(j = 0; j < MAP_SIZE; j++)
+      fscannf(stream, "%c:%d    ", player->map[i][j].presentation, player->map[i][j].isVisible);
+
+  fclose(stream);
+
+} */
+
+
+void create_log(Players *player, int n, char name[])
+{
+
+  int i, j;
+  char filename[2][20] = {"player1.log", "player2.log"};
+  FILE *stream;
+
+  stream = fopen(filename[n], "w");
+
+  fprintf(stream, "[username]:%s\n\n[board]:\n\n", name);
+  for (i = 0; i < MAP_SIZE; i++, fprintf(stream, "\n"))
+    for(j = 0; j < MAP_SIZE; j++)
+      fprintf(stream, "%c:%d    ", player->map[i][j].presentation, player->map[i][j].isVisible);
+
+  fclose(stream);
+
 }
 
 int check_pos(int x, int y, int height, int width, int rotation, int ia, Players *player)
@@ -172,7 +116,6 @@ int hit_pos(int x, int y, Players *player)
     return 1;
   } else {
     player->map[x - 1][y - 1].presentation = EMPTY;
-    player->map[x - 1][y - 1].background = EMPTY;
     player->map[x - 1][y - 1].isVisible = 1;
     return 0;
   }
@@ -206,7 +149,6 @@ int ai_hit_pos(Players *player)
     } else {
       count = -1;
       player->map[x + index1][y + index2].presentation = EMPTY;
-      player->map[x + index1][y + index2].background = EMPTY;
       player->map[x - 1][y - 1].isVisible = 1;
       return 0;
     }
@@ -238,7 +180,6 @@ int ai_hit_pos(Players *player)
         return 1;
       } else {
         player->map[x + index1][y + index2].presentation = EMPTY;
-        player->map[x + index1][y + index2].background = EMPTY;
         player->map[x - 1][y - 1].isVisible = 1;
         return 0;
       }

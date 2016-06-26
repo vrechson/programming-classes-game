@@ -47,11 +47,11 @@ void show_menu()
   "				<div id=\"header-menu\"></div>\n"
   "				<div id=\"buttons-container\">\n"
   "					<div id=\"single-player\" class=\"button-container\">\n"
-  "           <a href=\"?build=single\">\n"
+  "           <a href=\"?mode=1&build=0&name=player1\">\n"
   "             <button type=\"sub\" class=\"button-dialog\" >Single Player</button>\n"
   "           </a>\n"
   "					</div>\n"
-  "           <a href=\"?build=multi\">\n"
+  "           <a href=\"?mode=2&build=0&name=player1\">\n"
   "             <button type=\"sub\" class=\"button-dialog\" >Multi Player</button>\n"
   "           </a>\n"
   "					</div>\n"
@@ -65,7 +65,7 @@ void show_menu()
 
 }
 
-void add_board(Players *player)
+void add_board(Players *player, int mode, int index)
 {
   int i, j;
 
@@ -110,11 +110,11 @@ void add_board(Players *player)
 
           if(player->map[i - 1][j - 1].isVisible) {
             printf(
-            "                <td class=\"map-column orange\">%c</td>\n", SHOT
+            "                <td class=\"map-column light-blue\">%c</td>\n", SHOT
             );
           } else {
             printf(
-            "                <td class=\"map-column\">%c</td>\n", WATER
+            "               <td class=\"map-column\">%c</td>\n", j - 1, i - 1, WATER
             );
           }
 
@@ -122,11 +122,11 @@ void add_board(Players *player)
 
           if(player->map[i - 1][j - 1].isVisible && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY) {
             printf(
-            "                <td class=\"map-column orange\">%c</td>\n", player->map[i - 1][j - 1].presentation
+            "                <td class=\"map-column light-blue\">%c</td>\n", player->map[i - 1][j - 1].presentation
             );
           } else {
             printf(
-            "                <td class=\"map-column\">%c</td>\n", WATER
+            "               <td class=\"map-column\">%c</td>\n", j - 1, i - 1, WATER
             );
           }
 
@@ -143,11 +143,33 @@ void add_board(Players *player)
     "            </table>\n"
     "          </div>\n"
     "					<div id=\"button233r243\" class=\"generate-map\">\n"
-    "           <a href=\"?build=single\">\n"
+    "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
     "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
+    "           </a>\n"
     "					</div>\n"
-    "					<div id=\"button233r243\" class=\"generate-map\">\n"
-    "						<button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
+    "					<div id=\"button233r243\" class=\"generate-map\">\n", mode, index, player->name
+    );
+    if (mode == 1 && index == 0) {
+      printf(
+      "						<a href=\"?mode=%d\">\n"
+      "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
+      "						</a>\n", 3
+      );
+    } else  if (mode == 2 && index == 0) {
+      printf(
+      "						<a href=\"?mode=%d&build=%d&name=%s\">\n"
+      "						 <button type=\"button\" class=\"button-dialog jogar\">Player 2</button>\n"
+      "						</a>\n", mode, (index + 1), "player2"
+      );
+    } else {
+      printf(
+      "						<a href=\"?mode=%d\">\n"
+      "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
+      "						</a>\n", 3
+      );
+    }
+
+    printf(
     "					</div>\n"
     "        </div>\n"
     );

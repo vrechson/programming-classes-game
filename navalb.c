@@ -22,30 +22,42 @@
  ***********************************************************************/
 int main(int argc, char *argv[])
 {
-  Players player1, player2, player3, player4;
-  int players;
-  char answer = 'y', *get_p, arg[100];
+
+  int players, curr, x, y, n, i;
+  char name[50], *query;
+  enum users { PLAYER1, PLAYER2 };
+  enum modes { MODE1 = 1, MODE2 };
 
   srand((unsigned) time(NULL));
 
   printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
 
-    init_map(&player1);
-    init_map(&player2);
-    init_map(&player3);
-    init_map(&player4);
+//    init_map(&player1);
+//    init_map(&player2);
+//    init_map(&player3);
+//    init_map(&player4);
 
-    get_p = getenv("QUERY_STRING");
-
-    if (sscanf(get_p, "build=%s", arg) == 1) {
-      if(strcmp(arg, "single")) {
-        build_game(1, &player1);
-      } else if (strcmp(arg, "two")) {
-        build_game(2, &player1, &player2);
-      } else if (strcmp(arg, "three")) {
-        build_game(3, &player1, &player2, &player3);
-      } else if (strcmp(arg, "multi")) {
-        build_game(4, &player1, &player2, &player3, &player4);
+    query = getenv("QUERY_STRING");
+    if ((sscanf(query, "player=%d&posx=%d&posy=%d", &n, &x, &y)) == 3) {
+      for (i = 0; i < 3; i++);
+    } else if (sscanf(query, "mode=%d&build=%d&name=%49[^\n]s", &players, &curr, name) >= 2) {
+      if(name == NULL) {
+        strcpy(name, "player");
+      }
+      if (players == 1) {
+        if(curr == PLAYER1) {
+          build_player(MODE1, PLAYER1, name);
+        } else {
+          show_menu();
+        }
+      } else if (players == 2) {
+        if(curr == PLAYER1) {
+          build_player(MODE2, PLAYER1, name);
+        } else if (curr == PLAYER2) {
+          build_player(MODE2, PLAYER2, name);
+        } else {
+          show_menu();
+        }
       } else {
         show_menu();
       }

@@ -40,6 +40,10 @@ td.map-n:not(.coor) {
 	background: rgba(215, 95, 86, 0.68) none repeat scroll 0% 0%;
 }
 
+.light-blue {
+	background: #80A4AF none repeat scroll 0% 0%;
+}
+
 .map-container-box {
 	padding: 40px
 }
@@ -158,8 +162,4 @@ td.map-n:not(.coor) {
 	font-size: 25px;
 	padding: 10px;
 	font-family: inherit;
-}
-
-.gen-map, .generate-map {
-	display: none;
 }

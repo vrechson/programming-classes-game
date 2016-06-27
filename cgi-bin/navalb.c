@@ -27,46 +27,42 @@ int main(int argc, char *argv[])
   char name[50], *query;
   enum users { PLAYER1, PLAYER2 };
   enum modes { MODE1 = 1, MODE2 };
+  Players player1;
 
   srand((unsigned) time(NULL));
 
   printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
 
-//    init_map(&player1);
-//    init_map(&player2);
-//    init_map(&player3);
-//    init_map(&player4);
-
-    query = getenv("QUERY_STRING");
-    if ((sscanf(query, "mode=3&player=%d&posx=%d&posy=%d", &curr, &x, &y) == 3)) {
-      init_game();
-    } else if (sscanf(query, "mode=%d&build=%d&name=%49[^\n]s", &players, &curr, name) >= 2) {
-      if(name == NULL) {
-        strcpy(name, "player");
-      }
-      if (players == 1) {
-        if(curr == PLAYER1) {
-          build_player(MODE1, PLAYER1, name);
-        } else {
-          show_menu();
-        }
-      } else if (players == 2) {
-        if(curr == PLAYER1) {
-          build_player(MODE2, PLAYER1, name);
-        } else if (curr == PLAYER2) {
-          build_player(MODE2, PLAYER2, name);
-        } else {
-          show_menu();
-        }
+  query = getenv("QUERY_STRING");
+  if ((sscanf(query, "mode=3&player=%d&posx=%d&posy=%d", &curr, &x, &y) == 3)) {
+    guess_pos(curr, x, y);
+    draw_board();
+  } else if (sscanf(query, "mode=%d&build=%d&name=%49[^\n]s", &players, &curr, name) >= 2) {
+    if(name == NULL) {
+      strcpy(name, "player");
+    }
+    if (players == 1) {
+      if(curr == PLAYER1) {
+        build_player(MODE1, PLAYER1, name);
       } else {
         show_menu();
       }
-    } else if (sscanf(query, "mode=%d", &n) && n == 3) {
-      init_game();
+    } else if (players == 2) {
+      if(curr == PLAYER1) {
+        build_player(MODE2, PLAYER1, name);
+      } else if (curr == PLAYER2) {
+        build_player(MODE2, PLAYER2, name);
+      } else {
+        show_menu();
+      }
     } else {
       show_menu();
     }
-    return 0;
+  } else if (sscanf(query, "mode=%d", &n) && n == 3) {
+    init_game();
+  } else {
+    show_menu();
+  }
 
 
 

@@ -68,7 +68,7 @@ void create_log(Players *player, int n, char name[])
   fprintf(stream, "[username]: %s\n", name);
   for (i = 0; i < MAP_SIZE; i++)
     for(j = 0; j < MAP_SIZE; j++)
-      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=1 \n", i, j, player->map[i][j].presentation);
+      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=%d \n", i, j, player->map[i][j].presentation, player->map[i][j].isVisible);
 
   fclose(stream);
 
@@ -117,20 +117,16 @@ void pos_s(int x, int y, int height, int width, int rotation, char style, Player
 
 }
 
-/*
-int hit_pos(int x, int y, Players *player)
+int hit_pos(int index, int x, int y)
 {
-  if (player->map[x - 1][y - 1].presentation != WATER && player->map[x - 1][y - 1].presentation != EMPTY) {
-    player->map[x - 1][y - 1].isVisible = 1;
-    return 1;
-  } else {
-    player->map[x - 1][y - 1].presentation = EMPTY;
-    player->map[x - 1][y - 1].isVisible = 1;
-    return 0;
-  }
+  Players player;
+  get_log(&player, index);
 
+  player.map[y][x].isVisible = 1;
+
+  create_log(&player, index, player.name);
 }
-
+/*
 int ai_hit_pos(Players *player)
 {
   static int count = -1, x, y;

@@ -17,5 +17,5 @@
 void dom_head();
 void show_menu();
 void add_board(Players *player, int mode, int index);
-void draw_board(int args, ...);
+void draw_board();
 #endif

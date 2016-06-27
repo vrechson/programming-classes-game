@@ -116,7 +116,7 @@ void build_map(Players *player, char *name)
 }
 
 
-void init_game(Players player, int x, int y, int action) {
+void init_game(Players index, int x, int y, int action) {
   Players player1, player2;
 
   switch(action) {
@@ -127,10 +127,10 @@ void init_game(Players player, int x, int y, int action) {
   get_log(&player1, 0);
   get_log(&player2, 1);
 
-  draw_board(2, player1, player2);
+  draw_board();
 
 }
 
-void guess_pos(int player, int x, int y) {
-
+void guess_pos(int index, int x, int y) {
+  hit_pos(index, x, y);
 }

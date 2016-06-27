@@ -184,13 +184,10 @@ void add_board(Players *player, int mode, int index)
     );
 }
 
-void draw_board(int args, ...)
+void draw_board()
 {
   int i;
-  va_list ap;
   Players player;
-
-  va_start(ap, args);
 
   dom_head();
 
@@ -205,10 +202,9 @@ void draw_board(int args, ...)
 
   );
 
-  for (i = 0; i < args; i++) {
-    player = va_arg(ap, Players);
+  for (i = 0; i < 2; i++) {
     get_log(&player, i);
-    add_board(&player, 3, 0);
+    add_board(&player, 3, i);
   }
 
   printf(

@@ -15,7 +15,7 @@ void init_map(Players *player)
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
       player->map[i][j].presentation = EMPTY;
-      player->map[i][j].isVisible = 1;
+      player->map[i][j].isVisible = 0;
     }
 }
 
@@ -68,7 +68,7 @@ void create_log(Players *player, int n, char name[])
   fprintf(stream, "[username]: %s\n", name);
   for (i = 0; i < MAP_SIZE; i++)
     for(j = 0; j < MAP_SIZE; j++)
-      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=0 \n", i, j, player->map[i][j].presentation);
+      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=1 \n", i, j, player->map[i][j].presentation);
 
   fclose(stream);
 
@@ -91,7 +91,7 @@ int check_pos(int x, int y, int height, int width, int rotation, int ia, Players
         if (!ia)
           printf("A posição solicitada não obedece aos limites do mapa. tente uma nova posição.\n");
         return 1;
-      } else if (player->map[x + i - 1][y + j - 1].presentation != WATER) {
+      } else if (player->map[x + i - 1][y + j - 1].presentation != EMPTY) {
         if (!ia)
           printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
         return 1;

@@ -34,7 +34,7 @@ void build_player(int mode, int index, char name[])
 
   if (mode == 1) {
     init_map(&player2);
-    build_map(&player2, "Mr. Robot");
+    build_map(&player2, AI_NAME);
     create_log(&player2, (index + 1), "Mr. Robot");
   }
 
@@ -116,12 +116,21 @@ void build_map(Players *player, char *name)
 }
 
 
-void init_game() {
+void init_game(Players player, int x, int y, int action) {
   Players player1, player2;
 
+  switch(action) {
+  case 1:
+    //guess_pos(player, x, y);
+    break;
+  }
   get_log(&player1, 0);
   get_log(&player2, 1);
 
   draw_board(2, player1, player2);
+
+}
+
+void guess_pos(int player, int x, int y) {
 
 }

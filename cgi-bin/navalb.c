@@ -36,8 +36,7 @@ int main(int argc, char *argv[])
 //    init_map(&player2);
 //    init_map(&player3);
 //    init_map(&player4);
-//  init_game();
-//  return 0;
+
     query = getenv("QUERY_STRING");
     if ((sscanf(query, "mode=3&player=%d&posx=%d&posy=%d", &curr, &x, &y) == 3)) {
       init_game();

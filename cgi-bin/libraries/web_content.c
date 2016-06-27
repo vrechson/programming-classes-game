@@ -106,33 +106,24 @@ void add_board(Players *player, int mode, int index)
 
       for (j = 1; j <= MAP_SIZE; ++j) {
 
-        if (LEVEL && player->map[i - 1][j - 1].presentation != WATER ) {
+        if (player->map[i - 1][j - 1].isVisible) {
 
-          if (player->map[i - 1][j - 1].isVisible && player->map[i - 1][j - 1].presentation != EMPTY) {
+          if (LEVEL && player->map[i - 1][j - 1].presentation) {
             printf(
             "                <td class=\"map-column orange\">%c</td>\n", SHOT
             );
-          } else if (player->map[i - 1][j - 1].isVisible ) {
-            printf(
-            "                <td class=\"map-column orange\">%c</td>\n", EMPTY
-            );
           } else {
-            printf(
-            "               <td class=\"map-column\">%c</td>\n", WATER
-            );
+            if (player->map[i - 1][j - 1].presentation == EMPTY) {
+              printf(
+              "                <td class=\"map-column \">%c</td>\n", player->map[i - 1][j - 1].presentation
+              );
+            } else {
+              printf(
+              "                <td class=\"map-column orange\">%c</td>\n", player->map[i - 1][j - 1].presentation
+              );
+            }
           }
 
-        } else if (player->map[i - 1][j - 1].isVisible && player->map[i - 1][j - 1].presentation != WATER) {
-
-          if(player->map[i - 1][j - 1].presentation != EMPTY) {
-            printf(
-            "                <td class=\"map-column light-blue\">%c</td>\n", player->map[i - 1][j - 1].presentation
-            );
-          } else  {
-            printf(
-            "                <td class=\"map-column orange\">%c</td>\n", EMPTY
-            );
-          }
         } else {
           printf(
           "               <td class=\"map-column\">%c</td>\n", WATER
@@ -140,7 +131,6 @@ void add_board(Players *player, int mode, int index)
         }
 
       }
-
 
       printf(
       "              </tr>\n"

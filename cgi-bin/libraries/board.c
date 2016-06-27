@@ -14,7 +14,7 @@ void init_map(Players *player)
   int i, j;
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
-      player->map[i][j].presentation = WATER;
+      player->map[i][j].presentation = EMPTY;
       player->map[i][j].isVisible = 1;
     }
 }
@@ -117,6 +117,7 @@ void pos_s(int x, int y, int height, int width, int rotation, char style, Player
 
 }
 
+/*
 int hit_pos(int x, int y, Players *player)
 {
   if (player->map[x - 1][y - 1].presentation != WATER && player->map[x - 1][y - 1].presentation != EMPTY) {
@@ -194,3 +195,4 @@ int ai_hit_pos(Players *player)
     }
   }
 }
+*/

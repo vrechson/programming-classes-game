@@ -13,8 +13,9 @@
 /*
  *	Prototypes
  ***********************************************************************/
-void draw_board(Players *player1, Players *player2); /* draw entire board on screen */
+/*void draw_board(Players *player1, Players *player2);  draw entire board on screen */
 void draw_map(Players *player); /* draw a single map on screen */
+void get_log(Players *player, int n);
 void init_map(Players *player); /* initialize a user map */
 void hide_ships(Players *player); /* hide user ships */
 void create_log(Players *player, int n, char name[]);

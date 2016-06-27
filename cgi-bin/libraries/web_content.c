@@ -41,7 +41,7 @@ void show_menu()
   "	<body id=\"menu\">\n"
   "		<div id=\"document-container\">\n"
   "			<div id=\"header-container\">\n"
-  "				<h1 id=\"header-title\">Batalha naval</h1>\n"
+  "				<h1 id=\"header-title\">Batalha Naval</h1>\n"
   "			</div>\n"
   "			<div id=\"menu-container\">\n"
   "				<div id=\"header-menu\"></div>\n"
@@ -106,30 +106,37 @@ void add_board(Players *player, int mode, int index)
 
       for (j = 1; j <= MAP_SIZE; ++j) {
 
-        if (LEVEL && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY) {
+        if (LEVEL && player->map[i - 1][j - 1].presentation != WATER ) {
 
-          if(player->map[i - 1][j - 1].isVisible) {
+          if (player->map[i - 1][j - 1].isVisible && player->map[i - 1][j - 1].presentation != EMPTY) {
             printf(
-            "                <td class=\"map-column light-blue\">%c</td>\n", SHOT
+            "                <td class=\"map-column orange\">%c</td>\n", SHOT
+            );
+          } else if (player->map[i - 1][j - 1].isVisible ) {
+            printf(
+            "                <td class=\"map-column orange\">%c</td>\n", EMPTY
             );
           } else {
             printf(
-            "               <td class=\"map-column\">%c</td>\n", j - 1, i - 1, WATER
+            "               <td class=\"map-column\">%c</td>\n", WATER
             );
           }
 
-        } else {
+        } else if (player->map[i - 1][j - 1].isVisible && player->map[i - 1][j - 1].presentation != WATER) {
 
-          if(player->map[i - 1][j - 1].isVisible && player->map[i - 1][j - 1].presentation != WATER && player->map[i - 1][j - 1].presentation != EMPTY) {
+          if(player->map[i - 1][j - 1].presentation != EMPTY) {
             printf(
             "                <td class=\"map-column light-blue\">%c</td>\n", player->map[i - 1][j - 1].presentation
             );
-          } else {
+          } else  {
             printf(
-            "               <td class=\"map-column\">%c</td>\n", j - 1, i - 1, WATER
+            "                <td class=\"map-column orange\">%c</td>\n", EMPTY
             );
           }
-
+        } else {
+          printf(
+          "               <td class=\"map-column\">%c</td>\n", WATER
+          );
         }
 
       }
@@ -169,7 +176,7 @@ void add_board(Players *player, int mode, int index)
       "						</a>\n"
       "					</div>\n", mode, index, player->name, mode, (index + 1), "player2"
       );
-    } else  if (mode == 2 && index == 0){
+    } else  if (mode == 2 && index == 1){
       printf(
       "					<div id=\"button233r243\" class=\"generate-map\">\n"
       "           <a href=\"?mode=%d&build=%d&name=%s\">\n"

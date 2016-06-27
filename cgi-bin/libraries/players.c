@@ -18,7 +18,7 @@ void build_player(int mode, int index, char name[])
 
   init_map(&player);
   strcpy(player.name, name);
-  
+
   dom_head();
 
   printf(
@@ -112,5 +112,16 @@ void build_map(Players *player, char *name)
     pos_s(x, y, 1, 5, pos, 'A', player);
   }
 
-//  hide_ships(player);
+ //hide_ships(player);
+}
+
+
+void init_game() {
+  Players player1, player2;
+
+  get_log(&player1, 0);
+  get_log(&player2, 1);
+
+  draw_board(2, player1, player2);
+
 }

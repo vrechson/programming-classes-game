@@ -30,22 +30,30 @@ void hide_ships(Players *player)
 }
 
 
-/*void get_log(Players *player, int n)
+void get_log(Players *player, int n)
 {
 
-  int i, j;
-  char filename[2][20] = {"player1.log", "player2.log"};
+  int i, j, vis;
+  char filename[2][20] = {"player1.log", "player2.log"}, line[100], query[30], param[50], pres;
   FILE *stream;
 
   stream = fopen(filename[n], "r");
 
-  for (i = 0; i < MAP_SIZE; i++, fprintf(stream, "\n"))
-    for(j = 0; j < MAP_SIZE; j++)
-      fscannf(stream, "%c:%d    ", player->map[i][j].presentation, player->map[i][j].isVisible);
+  while (fgets(line, 100, stream)) {
+    if (sscanf(line, "[%[^]]]: %[^\n]", query, param)) {
+      if (strcmp(query, "username") == 0) {
+        strcpy(player->name, param);
+      } else if (strcmp(query, "board") == 0) {
+        sscanf(param, "POSY=%d POSX=%d PRES=%c VIS=%d", &i, &j, &pres, &vis);
+        player->map[i][j].presentation = pres;
+        player->map[i][j].isVisible = vis;
+      }
+    }
+  }
 
   fclose(stream);
 
-} */
+}
 
 
 void create_log(Players *player, int n, char name[])
@@ -57,10 +65,10 @@ void create_log(Players *player, int n, char name[])
 
   stream = fopen(filename[n], "w");
 
-  fprintf(stream, "[username]:%s\n\n[board]:\n\n", name);
-  for (i = 0; i < MAP_SIZE; i++, fprintf(stream, "\n"))
+  fprintf(stream, "[username]: %s\n", name);
+  for (i = 0; i < MAP_SIZE; i++)
     for(j = 0; j < MAP_SIZE; j++)
-      fprintf(stream, "%c:%d    ", player->map[i][j].presentation, player->map[i][j].isVisible);
+      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=0 \n", i, j, player->map[i][j].presentation);
 
   fclose(stream);
 

@@ -10,11 +10,12 @@
 
 #include <stdarg.h>
 #include "definitions.h"
-
+#include "board.h"
 /*
  *	Prototypes
  ***********************************************************************/
 void dom_head();
 void show_menu();
 void add_board(Players *player, int mode, int index);
+void draw_board(int args, ...);
 #endif

@@ -19,6 +19,7 @@
 void build_player(int mode, int index, char name[]);
 void build_ai(Players *player,  char *name);
 void build_map(Players *player, char *name);
+void init_game();
 //Players *guess_eng(Players *player1, Players *player2, int ia);
 
 #endif

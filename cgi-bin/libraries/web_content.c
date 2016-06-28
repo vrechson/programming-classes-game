@@ -65,7 +65,7 @@ void show_menu()
 
 }
 
-void add_board(Players *player, int mode, int index)
+void add_board(Players *player, int mode, int index, int link)
 {
   int i, j;
 
@@ -115,7 +115,7 @@ void add_board(Players *player, int mode, int index)
           } else {
             if (player->map[i - 1][j - 1].presentation == EMPTY) {
               printf(
-              "                <td class=\"map-column \">%c</td>\n", player->map[i - 1][j - 1].presentation
+              "                <td class=\"map-column light-blue\">%c</td>\n", player->map[i - 1][j - 1].presentation
               );
             } else {
               printf(
@@ -125,9 +125,10 @@ void add_board(Players *player, int mode, int index)
           }
 
         } else {
-          printf(
-          "               <td class=\"map-column\">%c</td>\n", WATER
-          );
+          if (link)
+            printf(
+            "               <td class=\"map-column\"><a href=\"navalb.cgi?mode=3&player=%d&posx=%d&posy=%d\">%c</a></td>\n", index, j - 1, i - 1, WATER
+            );
         }
 
       }
@@ -204,7 +205,7 @@ void draw_board()
 
   for (i = 0; i < 2; i++) {
     get_log(&player, i);
-    add_board(&player, 3, i);
+    add_board(&player, 3, i, 1);
   }
 
   printf(

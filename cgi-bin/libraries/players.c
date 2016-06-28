@@ -16,9 +16,6 @@ void build_player(int mode, int index, char name[])
   Players player, player2;
   int i;
 
-  init_map(&player);
-  strcpy(player.name, name);
-
   dom_head();
 
   printf(
@@ -35,11 +32,15 @@ void build_player(int mode, int index, char name[])
   if (mode == 1) {
     init_map(&player2);
     build_map(&player2, AI_NAME);
-    create_log(&player2, (index + 1), "Mr. Robot");
+    hide_ships(&player2);
+    create_log(&player2, (index + 1), AI_NAME);
   }
 
+  init_map(&player);
+  strcpy(player.name, name);
   build_map(&player, (&player)->name);
-  add_board(&player, mode, index);
+  add_board(&player, mode, index, 0);
+  hide_ships(&player);
   create_log(&player, index, (&player)->name);
 
 

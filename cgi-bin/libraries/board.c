@@ -15,7 +15,7 @@ void init_map(Players *player)
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
       player->map[i][j].presentation = EMPTY;
-      player->map[i][j].isVisible = 0;
+      player->map[i][j].isVisible = 1;
     }
 }
 

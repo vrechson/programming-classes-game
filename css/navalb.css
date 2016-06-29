@@ -1,6 +1,13 @@
 a {
     text-decoration: none !important;
-    color: black !important;
+    color: #333 !important;
+}
+.hit-pos:hover {
+  background: #80A4AF none repeat scroll 0% 0%;
+}
+.hit-pos > a {
+  position: relative;
+  height: 100%;
 }
 #menu {
 	background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/e9/BattleOfVirginiaCapes.jpg");

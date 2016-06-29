@@ -47,6 +47,7 @@ typedef struct {
 
 typedef struct Players {
     char name[50];
+    int score;
     board map[MAP_SIZE][MAP_SIZE];
 } Players;
 

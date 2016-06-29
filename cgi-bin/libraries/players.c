@@ -131,7 +131,3 @@ void init_game(Players index, int x, int y, int action) {
   draw_board();
 
 }
-
-void guess_pos(int index, int x, int y) {
-  hit_pos(index, x, y);
-}

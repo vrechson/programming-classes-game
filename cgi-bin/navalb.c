@@ -26,28 +26,31 @@ int main(int argc, char *argv[])
   int players, curr, x, y, n, i;
   char name[50], *query;
   enum users { PLAYER1, PLAYER2 };
-  enum modes { MODE1 = 1, MODE2 };
+  enum modes { MODE1 = 1, MODE2, MODE3, MODE4, MODE5 };
   Players player1;
 
   srand((unsigned) time(NULL));
 
   printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
-
   query = getenv("QUERY_STRING");
-  if ((sscanf(query, "mode=3&player=%d&posx=%d&posy=%d", &curr, &x, &y) == 3)) {
-    guess_pos(curr, x, y);
+//query = "mode=3";
+//init_game();
+  if ((sscanf(query, "mode=%d", &n) == 1 && (n == MODE5))) {
+    we_have_a_winner();
+  } else if ((sscanf(query, "mode=%d&player=%d&posx=%d&posy=%d", &n, &curr, &x, &y) == 4 && (n == MODE3 || n == MODE4))) {
+    hit_pos(curr, x, y);
     draw_board();
   } else if (sscanf(query, "mode=%d&build=%d&name=%49[^\n]s", &players, &curr, name) >= 2) {
     if(name == NULL) {
       strcpy(name, "player");
     }
-    if (players == 1) {
+    if (players == MODE1) {
       if(curr == PLAYER1) {
         build_player(MODE1, PLAYER1, name);
       } else {
         show_menu();
       }
-    } else if (players == 2) {
+    } else if (players == MODE2) {
       if(curr == PLAYER1) {
         build_player(MODE2, PLAYER1, name);
       } else if (curr == PLAYER2) {
@@ -58,7 +61,7 @@ int main(int argc, char *argv[])
     } else {
       show_menu();
     }
-  } else if (sscanf(query, "mode=%d", &n) && n == 3) {
+  } else if (sscanf(query, "mode=%d", &n) && (n == MODE3 || n == MODE4)) {
     init_game();
   } else {
     show_menu();

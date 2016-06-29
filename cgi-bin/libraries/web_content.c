@@ -125,9 +125,13 @@ void add_board(Players *player, int mode, int index, int link)
           }
 
         } else {
-          if (link)
+          if (link || (mode == 4 && index == 1))
             printf(
-            "               <td class=\"map-column\"><a href=\"navalb.cgi?mode=3&player=%d&posx=%d&posy=%d\">%c</a></td>\n", index, j - 1, i - 1, WATER
+            "               <td class=\"map-column hit-pos\"><a href=\"navalb.cgi?mode=%d&player=%d&posx=%d&posy=%d\"><div>%c</div></a></td>\n", mode, index, j - 1, i - 1, WATER
+            );
+          else
+            printf(
+            "               <td class=\"map-column\">%c</td>\n", WATER
             );
         }
 
@@ -152,7 +156,7 @@ void add_board(Players *player, int mode, int index, int link)
       "						<a href=\"?mode=%d\">\n"
       "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
       "						</a>\n"
-      "					</div>\n", mode, index, player->name, 3
+      "					</div>\n", mode, index, player->name, 4
       );
     } else  if (mode == 2 && index == 0) {
       printf(
@@ -187,7 +191,8 @@ void add_board(Players *player, int mode, int index, int link)
 
 void draw_board()
 {
-  int i;
+  int i, index;
+  char *query;
   Players player;
 
   dom_head();
@@ -205,13 +210,61 @@ void draw_board()
 
   for (i = 0; i < 2; i++) {
     get_log(&player, i);
-    add_board(&player, 3, i, 1);
+    query = getenv("QUERY_STRING");
+    if ((sscanf(query, "mode=3&player=%d", &index) == 1) && (index != i))
+      add_board(&player, 3, i, 1);
+    else if ((sscanf(query, "mode=3&player=%d", &index) == 1) && (index == i))
+      add_board(&player, 3, i, 0);
+    else if ((sscanf(query, "mode=4") == 0))
+      add_board(&player, 4, i, 0);
   }
-
   printf(
   "  		</div>\n"
   "		</div>\n"
   "	</body>\n"
   "</html>\n"
   );
+}
+
+void we_have_a_winner(char name[])
+{
+  int i;
+  Players player;
+
+  for (i = 0; i < 2; i++) {
+    get_log(&player, i);
+    if (player.score == TOTAL_SLOTS)
+      break;
+  }
+  dom_head();
+
+  printf(
+
+  "<body id=\"mapa\">\n"
+  "<div id=\"document-container\">\n"
+  "			<div id=\"header-container\">\n"
+  "				<h1 id=\"header-title\"></h1>\n"
+  "			</div>\n"
+  "      <div id=\"board-container\">"
+  "				<div id=\"map2\" class=\"ship-board\">"
+  "					<div id=\"player-name\" class=\"name-container\">"
+  "						<div style=\"display: none;\" id=\"name-input-feelings\">"
+  "	            <input id=\"Player2-input\" class=\"input-properties\" placeholder=\"Insira seu nome\" autocomplete=\"off\" type=\"text\">"
+  "							<button type=\"button\" class=\"button-dialog name-dialog\"><a class=\"fa fa-angle-right\"></a></button>"
+  "						</div>"
+  "						<div style=\"text-align: center; display: block;\" class=\"player-name\">"
+  "							<span style=\"text-align: center;\" id=\"player2-span\">%s ganhou o jogo</span>"
+  "						</div>"
+  "          </div>"
+
+  "        </div>"
+    		"</div>"
+  "   </div>"
+  "</div>"
+
+
+  "</body>"
+  "</html>", player.name
+  );
+
 }

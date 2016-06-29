@@ -15,6 +15,7 @@ void init_map(Players *player)
   for (i = 0; i < MAP_SIZE; i++)
     for (j = 0; j < MAP_SIZE; j++) {
       player->map[i][j].presentation = EMPTY;
+      player->score = 0;
       player->map[i][j].isVisible = 1;
     }
 }
@@ -66,6 +67,7 @@ void create_log(Players *player, int n, char name[])
   stream = fopen(filename[n], "w");
 
   fprintf(stream, "[username]: %s\n", name);
+  fprintf(stream, "[score]: %d\n", player->score);
   for (i = 0; i < MAP_SIZE; i++)
     for(j = 0; j < MAP_SIZE; j++)
       fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=%d \n", i, j, player->map[i][j].presentation, player->map[i][j].isVisible);
@@ -119,12 +121,26 @@ void pos_s(int x, int y, int height, int width, int rotation, char style, Player
 
 int hit_pos(int index, int x, int y)
 {
-  Players player;
-  get_log(&player, index);
+  Players player1, player2;
+  int ind;
 
-  player.map[y][x].isVisible = 1;
+  get_log(&player1, index);
 
-  create_log(&player, index, player.name);
+  player1.map[y][x].isVisible = 1;
+  if (1 || player1.map[y][x].presentation != EMPTY) {
+    if (index == 0)
+      ind = 1;
+    else
+     ind = 0;
+
+    get_log(&player2, ind);
+    player2.score++;
+    create_log(&player2, ind, player2.name);
+    if (player2.score == TOTAL_SLOTS)
+      printf("<meta http-equiv=\"refresh\" content=0;url=\"?mode=5\">");
+  }
+
+  create_log(&player1, index, player1.name);
 }
 /*
 int ai_hit_pos(Players *player)

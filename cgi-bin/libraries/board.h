@@ -9,6 +9,7 @@
 #define _BOARD_H_
 
 #include "definitions.h"
+#include "web_content.h"
 
 /*
  *	Prototypes

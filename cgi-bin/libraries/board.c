@@ -48,6 +48,8 @@ void get_log(Players *player, int n)
         sscanf(param, "POSY=%d POSX=%d PRES=%c VIS=%d", &i, &j, &pres, &vis);
         player->map[i][j].presentation = pres;
         player->map[i][j].isVisible = vis;
+      } else if (strcmp(query, "score") == 0) {
+        player->score = atoi(param);
       }
     }
   }
@@ -127,11 +129,11 @@ int hit_pos(int index, int x, int y)
   get_log(&player1, index);
 
   player1.map[y][x].isVisible = 1;
-  if (1 || player1.map[y][x].presentation != EMPTY) {
+  if (player1.map[y][x].presentation != EMPTY) {
     if (index == 0)
       ind = 1;
     else
-     ind = 0;
+      ind = 0;
 
     get_log(&player2, ind);
     player2.score++;

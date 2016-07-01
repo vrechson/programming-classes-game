@@ -51,8 +51,6 @@ void build_player(int mode, int index, char name[])
   "</html>\n"
   );
 
-//  hide_ships(player);
-
 }
 
 void build_map(Players *player, char *name)
@@ -112,22 +110,5 @@ void build_map(Players *player, char *name)
     } while (flag);
     pos_s(x, y, 1, 5, pos, 'A', player);
   }
-
- //hide_ships(player);
-}
-
-
-void init_game(Players index, int x, int y, int action) {
-  Players player1, player2;
-
-  switch(action) {
-  case 1:
-    //guess_pos(player, x, y);
-    break;
-  }
-  get_log(&player1, 0);
-  get_log(&player2, 1);
-
-  draw_board();
 
 }

@@ -77,7 +77,7 @@ void add_board(Players *player, int mode, int index, int link)
     "							<button type=\"button\" class=\"button-dialog name-dialog\"><a class=\"fa fa-angle-right\"></a></button>\n"
     "						</div>\n"
     "						<div class=\"player-name\">\n"
-    "							<span id=\"player2-span\"></span>\n"
+    "							<span id=\"player2-span\">%s</span>\n"
     "						</div>\n"
     "          </div>\n"
     "          <div id=\"map-container\" class=\"map-container-box\">\n"
@@ -94,7 +94,7 @@ void add_board(Players *player, int mode, int index, int link)
     "                <td class=\"map-n  coor\">H</td>\n"
     "                <td class=\"map-n  coor\">I</td>\n"
     "                <td class=\"map-n  coor\">J</td>\n"
-    "              </tr>\n"
+    "              </tr>\n", player->name
 
     );
 
@@ -178,9 +178,9 @@ void add_board(Players *player, int mode, int index, int link)
       "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
       "           </a>\n"
       "					</div>\n"
-      "						<a href=\"?mode=%d\">\n"
+      "						<a href=\"?mode=%d&player=%d\">\n"
       "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
-      "						</a>\n", mode, index, player->name, 3
+      "						</a>\n", mode, index, player->name, 3, (rand() % 2)
       );
     }
 
@@ -191,7 +191,7 @@ void add_board(Players *player, int mode, int index, int link)
 
 void draw_board()
 {
-  int i, index;
+  int i, index, n;
   char *query;
   Players player;
 
@@ -215,7 +215,7 @@ void draw_board()
       add_board(&player, 3, i, 1);
     else if ((sscanf(query, "mode=3&player=%d", &index) == 1) && (index == i))
       add_board(&player, 3, i, 0);
-    else if ((sscanf(query, "mode=4") == 0))
+    else if ((sscanf(query, "mode=%d", &n) == 1) && n == 4)
       add_board(&player, 4, i, 0);
   }
   printf(
@@ -229,12 +229,13 @@ void draw_board()
 void we_have_a_winner(char name[])
 {
   int i;
+  char winner[50] = "Ninguem";
   Players player;
 
   for (i = 0; i < 2; i++) {
     get_log(&player, i);
     if (player.score == TOTAL_SLOTS)
-      break;
+      strcpy(winner, player.name);
   }
   dom_head();
 
@@ -247,24 +248,29 @@ void we_have_a_winner(char name[])
   "			</div>\n"
   "      <div id=\"board-container\">"
   "				<div id=\"map2\" class=\"ship-board\">"
-  "					<div id=\"player-name\" class=\"name-container\">"
+  "					<div id=\"player-name\" class=\"name-container\" style=\"min-height: 100px;\">"
   "						<div style=\"display: none;\" id=\"name-input-feelings\">"
   "	            <input id=\"Player2-input\" class=\"input-properties\" placeholder=\"Insira seu nome\" autocomplete=\"off\" type=\"text\">"
   "							<button type=\"button\" class=\"button-dialog name-dialog\"><a class=\"fa fa-angle-right\"></a></button>"
   "						</div>"
-  "						<div style=\"text-align: center; display: block;\" class=\"player-name\">"
-  "							<span style=\"text-align: center;\" id=\"player2-span\">%s ganhou o jogo</span>"
+  "						<div style=\"text-align: center; display: block; padding: 25px; font-size: 30px;\" class=\"player-name\">"
+  "							<span id=\"player2-span\" style=\"text-align: center;\">%s ganhou o jogo!!!</span>"
   "						</div>"
-  "          </div>"
+  "           <div id=\"button-container\">"
+  "             <a href=\"navalb.cgi\">"
+  "               <button type=\"sub\" class=\"button-dialog play-again\" style=\"\" >Jogar Novamente</button>"
+  "             </a>"
+  "           </div>"
+  "         </div>"
 
   "        </div>"
-    		"</div>"
+  "     </div>"
   "   </div>"
   "</div>"
 
 
   "</body>"
-  "</html>", player.name
+  "</html>", winner
   );
 
 }

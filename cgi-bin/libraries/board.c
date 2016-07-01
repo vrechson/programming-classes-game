@@ -7,7 +7,7 @@
 #include "board.h"
 
 /*
- *	FUnctions
+ *	Functions
  ***********************************************************************/
 void init_map(Players *player)
 {
@@ -128,8 +128,7 @@ int hit_pos(int index, int x, int y)
 
   get_log(&player1, index);
 
-  player1.map[y][x].isVisible = 1;
-  if (player1.map[y][x].presentation != EMPTY) {
+  if (player1.map[y][x].presentation != EMPTY && player1.map[y][x].isVisible == 0) {
     if (index == 0)
       ind = 1;
     else
@@ -138,75 +137,47 @@ int hit_pos(int index, int x, int y)
     get_log(&player2, ind);
     player2.score++;
     create_log(&player2, ind, player2.name);
-    if (player2.score == TOTAL_SLOTS)
+    if (player2.score >= TOTAL_SLOTS)
       printf("<meta http-equiv=\"refresh\" content=0;url=\"?mode=5\">");
   }
 
+  player1.map[y][x].isVisible = 1;
   create_log(&player1, index, player1.name);
 }
-/*
-int ai_hit_pos(Players *player)
+
+void ai_hit_pos()
 {
-  static int count = -1, x, y;
-  int index1, index2;
+  Players player1, player2;
+  int x, y, around[2] = {1, -1};
+  char *query;
 
-  count++;
 
-  if (count) {
-    index1 = rand() % 2;
-    index2 = rand() % 2;
+  query = getenv("QUERY_STRING");
 
-    if (!index1)
-      index1 = -1;
-    if (!index2)
-      index2 = -1;
-    if (x == (MAP_SIZE - 1))
-      index1 = -1;
-    if (y == (MAP_SIZE - 1))
-      index2 = -1;
+  if ((sscanf(query, "mode=4&player=0&posx=%d&posy=%d", &x, &y) == 2)) {
+    x += around[rand() % 2];
+    y += around[rand() % 2];
 
-      //printf("%d", x + index2);
-    if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
-      player->map[x + index1][y + index2].isVisible = 1;
-      return 1;
-    } else {
-      count = -1;
-      player->map[x + index1][y + index2].presentation = EMPTY;
-      player->map[x - 1][y - 1].isVisible = 1;
-      return 0;
+    while (x >= MAP_SIZE || x < 0 || y < 0 || y >= MAP_SIZE) {
+      x = rand() % MAP_SIZE;
+      y = rand() % MAP_SIZE;
     }
+
   } else {
     x = rand() % MAP_SIZE;
     y = rand() % MAP_SIZE;
-
-    if (player->map[x][y].presentation != WATER && player->map[x][y].presentation != EMPTY) {
-      player->map[x][y].isVisible = 1;
-      //draw_map(player);
-      return 1;
-    } else {
-      index1 = rand() % 2;
-      index2 = rand() % 2;
-      x = rand() % MAP_SIZE;
-      y = rand() % MAP_SIZE;
-      if (!index1)
-        index1 = -1;
-      if (!index2)
-        index2 = -1;
-      if (x == (MAP_SIZE - 1))
-        index1 = -1;
-      if (y == (MAP_SIZE - 1))
-        index2 = -1;
-
-      if (player->map[x + index1][y + index2].presentation != WATER && player->map[x + index1][y + index2].presentation != EMPTY) {
-        player->map[x + index1][y + index2].isVisible = 1;
-        //draw_map(player);
-        return 1;
-      } else {
-        player->map[x + index1][y + index2].presentation = EMPTY;
-        player->map[x - 1][y - 1].isVisible = 1;
-        return 0;
-      }
-    }
   }
+
+  get_log(&player1, 0);
+
+  if (player1.map[y][x].presentation != EMPTY && player1.map[y][x].isVisible == 0) {
+    get_log(&player2, 1);
+    player2.score++;
+    create_log(&player2, 1, AI_NAME);
+    if (player2.score >= TOTAL_SLOTS)
+      printf("<meta http-equiv=\"refresh\" content=0;url=\"?mode=5\">");
+  }
+
+  player1.map[y][x].isVisible = 1;
+  create_log(&player1, 0, player1.name);
 }
-*/

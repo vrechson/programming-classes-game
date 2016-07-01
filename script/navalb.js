@@ -13,14 +13,17 @@ $(function() {
     })(window.location.search.substr(1).split('&'))
 
     if ($.QueryString["name"] != "player1" && $.QueryString["name"] != "player2") {
-      $("#player2-span").text($.QueryString["name"]);
+      $(".player2-span").text($.QueryString["name"]);
       $(".player-name").show();
       $("#name-input-feelings").hide();
     }
 
+    if ($.QueryString["mode"] && $.QueryString["mode"] > 2)
+      $(".name-container > #name-input-feelings").hide();
+
     $("button.button-dialog:nth-child(2)").click(function() {
-      if ($("#Player2-input").val() != "") {
-        $("#player2-span").text($("#Player2-input").val());
+      if ($(".Player2-input").val() != "") {
+        $(".player2-span").text($(".Player2-input").val());
         $(".player-name").show();
         $("#name-input-feelings").hide();
         $("div.generate-map:nth-child(3) > a:nth-child(1)").attr("href", "?mode=" + $.QueryString["mode"] + "&build=" + $.QueryString["build"] + "&name=" + $("#Player2-input").val());

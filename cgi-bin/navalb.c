@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
     we_have_a_winner();
   } else if ((sscanf(query, "mode=%d&player=%d&posx=%d&posy=%d", &n, &curr, &x, &y) == 4 && (n == MODE3 || n == MODE4))) {
     hit_pos(curr, x, y);
+    if (n == MODE4)
+      ai_hit_pos();
     draw_board();
   } else if (sscanf(query, "mode=%d&build=%d&name=%49[^\n]s", &players, &curr, name) >= 2) {
     if(name == NULL) {
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
       show_menu();
     }
   } else if (sscanf(query, "mode=%d", &n) && (n == MODE3 || n == MODE4)) {
-    init_game();
+    draw_board();//init_game();
   } else {
     show_menu();
   }

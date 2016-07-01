@@ -48,11 +48,11 @@ td.map-n:not(.coor) {
 	border: 1px solid black;
 }
 .orange {
-	background: rgba(215, 95, 86, 0.68) none repeat scroll 0% 0%;
+	background: #9A7676 none repeat scroll 0% 0%;
 }
 
 .light-blue {
-	background: #80A4AF none repeat scroll 0% 0%;
+	background: #7B99A9 none repeat scroll 0% 0%;
 }
 
 .map-container-box {
@@ -70,7 +70,7 @@ td.map-n:not(.coor) {
 .name-container {
 	min-height: 50px;
 	width: 100%;
-	background: #D75F56;
+	background: #9A7676 none repeat scroll 0% 0%;
 }
 .input-properties {
   display: block;
@@ -86,7 +86,7 @@ td.map-n:not(.coor) {
 }
 .ship-board {
 	float: left;
-	min-height: 400px;
+	min-height: 100px;
 	min-width: 400px;
 	background: #6B8991 none repeat scroll 0% 0%;
 	margin: 20px;
@@ -140,16 +140,16 @@ td.map-n:not(.coor) {
 }
 
 .gen-map:hover, .name-dialog:hover, .button-dialog:hover {
-	background: #425564;
+	background: rgb(84, 101, 117);
 }
 
 .jogar {
-	background: rgb(167, 209, 137) none repeat scroll 0% 0%;
+	background: #8CB18C  none repeat scroll 0% 0%;
 	color: rgb(39, 56, 63);
 }
 
 .jogar:hover{
-	background: rgb(177, 218, 148)  none repeat scroll 0% 0%;
+	background: #ADCCAD none repeat scroll 0% 0%;
 	color: #425564;
 }
 
@@ -173,4 +173,13 @@ td.map-n:not(.coor) {
 	font-size: 25px;
 	padding: 10px;
 	font-family: inherit;
+}
+.play-again {
+  margin-bottom: 0px;
+  width: 100%;
+  background: rgb(57, 73, 89) none repeat scroll 0% 0%;
+  color: rgb(173, 176, 181);
+  font-size: 20px;
+  height: 50px;
+  border-radius: 0px;
 }

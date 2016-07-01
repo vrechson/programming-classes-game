@@ -53,22 +53,70 @@ void build_player(int mode, int index, char name[])
 
 }
 
+/* get player logs */
+void get_log(Players *player, int n)
+{
+
+  int i, j, vis;
+  char filename[2][20] = {"player1.log", "player2.log"}, line[100], query[30], param[50], pres;
+  FILE *stream;
+
+  stream = fopen(filename[n], "r");
+
+  while (fgets(line, 100, stream)) {
+    if (sscanf(line, "[%[^]]]: %[^\n]", query, param)) {
+      if (strcmp(query, "username") == 0) {
+        strcpy(player->name, param);
+      } else if (strcmp(query, "board") == 0) {
+        sscanf(param, "POSY=%d POSX=%d PRES=%c VIS=%d", &i, &j, &pres, &vis);
+        player->map[i][j].presentation = pres;
+        player->map[i][j].isVisible = vis;
+      } else if (strcmp(query, "score") == 0) {
+        player->score = atoi(param);
+      }
+    }
+  }
+
+  fclose(stream);
+
+}
+
+/* write player logs */
+void create_log(Players *player, int n, char name[])
+{
+
+  int i, j;
+  char filename[2][20] = {"player1.log", "player2.log"};
+  FILE *stream;
+
+  stream = fopen(filename[n], "w");
+
+  fprintf(stream, "[username]: %s\n", name);
+  fprintf(stream, "[score]: %d\n", player->score);
+  for (i = 0; i < MAP_SIZE; i++)
+    for(j = 0; j < MAP_SIZE; j++)
+      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=%d \n", i, j, player->map[i][j].presentation, player->map[i][j].isVisible);
+
+  fclose(stream);
+
+}
+
+/* generate a random map */
 void build_map(Players *player, char *name)
 {
   int i, x, y, flag, pos;
   strcpy(player->name, name);
   x = 0;
-  for (i = 1, flag = 0; i <= SUBMARINE; i++, flag = 0) {
+  for (i = 1, flag = 0; i <= SUBMARINE; flag = 0, ++i) {
     do {
       x = rand() % MAP_SIZE;
       y = rand() % MAP_SIZE;
-      pos = rand() % 2;
       flag = check_pos(x, y, 1, 1, pos, 1, player);
     } while (flag);
     pos_s(x, y, 1, 1, pos, 'S', player);
   }
 
-  for (i = 1, flag = 0; i <= BATTLESHIP; i++, flag = 0) {
+  for (i = 1, flag = 0; i <= BATTLESHIP; flag = 0, ++i) {
     do {
       x = rand() % MAP_SIZE;
       y = rand() % MAP_SIZE;
@@ -78,7 +126,7 @@ void build_map(Players *player, char *name)
     pos_s(x, y, 2, 2, pos, 'B', player);
   }
 
-  for (i = 1, flag = 0; i <= CRAISER; i++, flag = 0) {
+  for (i = 1, flag = 0; i <= CRAISER; flag = 0, ++i) {
     do {
       x = rand() % MAP_SIZE;
       y = rand() % MAP_SIZE;
@@ -89,7 +137,7 @@ void build_map(Players *player, char *name)
     pos_s(x, y, 1, 2, pos, 'C', player);
   }
 
-  for (i = 1, flag = 0; i <= DESTROYER; i++, flag = 0) {
+  for (i = 1, flag = 0; i <= DESTROYER; flag = 0, ++i) {
     do {
       x = rand() % MAP_SIZE;
       y = rand() % MAP_SIZE;
@@ -100,11 +148,11 @@ void build_map(Players *player, char *name)
     pos_s(x, y, 1, 4, pos, 'D', player);
   }
 
-  for (i = 1, flag = 0; i <= AIRCRAFT; i++, flag = 0) {
+  for (i = 1, flag = 0; i <= AIRCRAFT; flag = 0, ++i) {
     do {
       x = rand() % MAP_SIZE;
       y = rand() % MAP_SIZE;
-
+      pos = rand() % 2;
       flag = check_pos(x, y, 1, 5, pos, 1, player);
 
     } while (flag);

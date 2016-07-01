@@ -8,14 +8,14 @@
 /*
  *	Libraries
  ***********************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include "libraries/board.h"
-#include "libraries/players.h"
-#include "libraries/definitions.h"
-#include "libraries/web_content.h"
+#include <stdio.h> /* i/o */
+#include <stdlib.h> /* srand */
+#include <string.h> /* string functions */
+#include <time.h> /* time */
+#include "libraries/board.h" /* game board related */
+#include "libraries/players.h" /* players related */
+#include "libraries/web_content.h" /* displays content in html */
+#include "libraries/definitions.h" /* some general definitions */
 
 /*
  *	Main
@@ -23,36 +23,41 @@
 int main(int argc, char *argv[])
 {
 
+  /* define main variables */
   int players, curr, x, y, n, i;
   char name[50], *query;
   enum users { PLAYER1, PLAYER2 };
   enum modes { MODE1 = 1, MODE2, MODE3, MODE4, MODE5 };
   Players player1;
 
+  /* define rand seed */
   srand((unsigned) time(NULL));
 
+  /* define http header */
   printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
+
+  /* get enviroment parameters */
   query = getenv("QUERY_STRING");
-//query = "mode=3";
-//init_game();
+
+  /* control game flow */
   if ((sscanf(query, "mode=%d", &n) == 1 && (n == MODE5))) {
-    we_have_a_winner();
+    we_have_a_winner(); /* someone won the game */
   } else if ((sscanf(query, "mode=%d&player=%d&posx=%d&posy=%d", &n, &curr, &x, &y) == 4 && (n == MODE3 || n == MODE4))) {
-    hit_pos(curr, x, y);
+    hit_pos(curr, x, y); /* take a guess */
     if (n == MODE4)
-      ai_hit_pos();
-    draw_board();
+      ai_hit_pos(); /* ai also is playing */
+    draw_board(); /* show the game */
   } else if (sscanf(query, "mode=%d&build=%d&name=%49[^\n]s", &players, &curr, name) >= 2) {
-    if(name == NULL) {
+    if(name == NULL)
       strcpy(name, "player");
-    }
-    if (players == MODE1) {
+
+    if (players == MODE1) { /* man vs. machine */
       if(curr == PLAYER1) {
-        build_player(MODE1, PLAYER1, name);
+        build_player(MODE1, PLAYER1, name); /* build player scope */
       } else {
-        show_menu();
+        show_menu(); /* wrong page */
       }
-    } else if (players == MODE2) {
+    } else if (players == MODE2) { /* man vs. man */
       if(curr == PLAYER1) {
         build_player(MODE2, PLAYER1, name);
       } else if (curr == PLAYER2) {
@@ -64,13 +69,10 @@ int main(int argc, char *argv[])
       show_menu();
     }
   } else if (sscanf(query, "mode=%d", &n) && (n == MODE3 || n == MODE4)) {
-    draw_board();//init_game();
+    draw_board();
   } else {
     show_menu();
   }
-
-
-
 
   return 0;
 }

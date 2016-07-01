@@ -1,16 +1,19 @@
 /*
-*	Libraries
-***********************************************************************/
+ *	Libraries
+ ***********************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdarg.h>
 #include "web_content.h"
+
 /*
-*	FUnctions
-***********************************************************************/
+ *	FUnctions
+ ***********************************************************************/
+
+/* html page head */
 void dom_head()
 {
+
   printf(
 
   "<!DOCTYPE html>\n"
@@ -29,8 +32,10 @@ void dom_head()
   "	</head>\n"
 
   );
+
 }
 
+/* displays initial page */
 void show_menu()
 {
 
@@ -65,11 +70,13 @@ void show_menu()
 
 }
 
+/* displays player board on screen */
 void add_board(Players *player, int mode, int index, int link)
 {
   int i, j;
 
     printf(
+
     "				<div id=\"map2\" class=\"ship-board\">\n"
     "					<div id=\"player-name\" class=\"name-container\">\n"
     "						<div id=\"name-input-feelings\">\n"
@@ -100,26 +107,35 @@ void add_board(Players *player, int mode, int index, int link)
 
     for (i = 1; i <= MAP_SIZE; ++i) {
       printf(
+
       "              <tr class=\"map-line\">\n"
       "                <td class=\"map-n\">%d</td>\n", i
+
       );
 
       for (j = 1; j <= MAP_SIZE; ++j) {
 
-        if (player->map[i - 1][j - 1].isVisible) {
+        if (player->map[i - 1][j - 1].isVisible) { /* only if slot was hit */
 
+          /* hard level compilation don't show boat types */
           if (LEVEL && player->map[i - 1][j - 1].presentation) {
             printf(
+
             "                <td class=\"map-column orange\">%c</td>\n", SHOT
+
             );
           } else {
             if (player->map[i - 1][j - 1].presentation == EMPTY) {
               printf(
+
               "                <td class=\"map-column light-blue\">%c</td>\n", player->map[i - 1][j - 1].presentation
+
               );
             } else {
               printf(
+
               "                <td class=\"map-column orange\">%c</td>\n", player->map[i - 1][j - 1].presentation
+
               );
             }
           }
@@ -127,26 +143,38 @@ void add_board(Players *player, int mode, int index, int link)
         } else {
           if (link || (mode == 4 && index == 1))
             printf(
+
             "               <td class=\"map-column hit-pos\"><a href=\"navalb.cgi?mode=%d&player=%d&posx=%d&posy=%d\"><div>%c</div></a></td>\n", mode, index, j - 1, i - 1, WATER
+
             );
           else
             printf(
+
             "               <td class=\"map-column\">%c</td>\n", WATER
+
             );
         }
 
       }
 
       printf(
+
       "              </tr>\n"
+
       );
     }
+
     printf(
+
     "            </table>\n"
     "          </div>\n"
+
     );
+
+    /* link slots */
     if (mode == 1 && index == 0) {
       printf(
+
       "					<div id=\"button233r243\" class=\"generate-map\">\n"
       "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
       "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
@@ -157,9 +185,11 @@ void add_board(Players *player, int mode, int index, int link)
       "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
       "						</a>\n"
       "					</div>\n", mode, index, player->name, 4
+
       );
     } else  if (mode == 2 && index == 0) {
       printf(
+
       "					<div id=\"button233r243\" class=\"generate-map\">\n"
       "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
       "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
@@ -170,9 +200,11 @@ void add_board(Players *player, int mode, int index, int link)
       "						 <button type=\"button\" class=\"button-dialog jogar\">Player 2</button>\n"
       "						</a>\n"
       "					</div>\n", mode, index, player->name, mode, (index + 1), "player2"
+
       );
     } else  if (mode == 2 && index == 1){
       printf(
+
       "					<div id=\"button233r243\" class=\"generate-map\">\n"
       "           <a href=\"?mode=%d&build=%d&name=%s\">\n"
       "					  	<button type=\"button\" class=\"button-dialog gen-map\">Gerar novo mapa</button>\n"
@@ -181,14 +213,18 @@ void add_board(Players *player, int mode, int index, int link)
       "						<a href=\"?mode=%d&player=%d\">\n"
       "						 <button type=\"button\" class=\"button-dialog jogar\">Jogar</button>\n"
       "						</a>\n", mode, index, player->name, 3, (rand() % 2)
+
       );
     }
 
     printf(
+
     "        </div>\n"
+
     );
 }
 
+/* draw gameboard on screen */
 void draw_board()
 {
   int i, index, n;
@@ -208,7 +244,7 @@ void draw_board()
 
   );
 
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < 2; ++i) {
     get_log(&player, i);
     query = getenv("QUERY_STRING");
     if ((sscanf(query, "mode=3&player=%d", &index) == 1) && (index != i))
@@ -218,21 +254,25 @@ void draw_board()
     else if ((sscanf(query, "mode=%d", &n) == 1) && n == 4)
       add_board(&player, 4, i, 0);
   }
+
   printf(
+
   "  		</div>\n"
   "		</div>\n"
   "	</body>\n"
   "</html>\n"
+
   );
 }
 
+/* displayer winner screen */
 void we_have_a_winner(char name[])
 {
   int i;
-  char winner[50] = "Ninguem";
+  char winner[50] = "Ninguem"; /* if page is fired without winners */
   Players player;
 
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < 2; ++i) {
     get_log(&player, i);
     if (player.score == TOTAL_SLOTS)
       strcpy(winner, player.name);
@@ -246,31 +286,28 @@ void we_have_a_winner(char name[])
   "			<div id=\"header-container\">\n"
   "				<h1 id=\"header-title\"></h1>\n"
   "			</div>\n"
-  "      <div id=\"board-container\">"
-  "				<div id=\"map2\" class=\"ship-board\">"
-  "					<div id=\"player-name\" class=\"name-container\" style=\"min-height: 100px;\">"
-  "						<div style=\"display: none;\" id=\"name-input-feelings\">"
-  "	            <input id=\"Player2-input\" class=\"input-properties\" placeholder=\"Insira seu nome\" autocomplete=\"off\" type=\"text\">"
-  "							<button type=\"button\" class=\"button-dialog name-dialog\"><a class=\"fa fa-angle-right\"></a></button>"
-  "						</div>"
-  "						<div style=\"text-align: center; display: block; padding: 25px; font-size: 30px;\" class=\"player-name\">"
-  "							<span id=\"player2-span\" style=\"text-align: center;\">%s ganhou o jogo!!!</span>"
-  "						</div>"
-  "           <div id=\"button-container\">"
-  "             <a href=\"navalb.cgi\">"
-  "               <button type=\"sub\" class=\"button-dialog play-again\" style=\"\" >Jogar Novamente</button>"
-  "             </a>"
-  "           </div>"
-  "         </div>"
-
-  "        </div>"
-  "     </div>"
-  "   </div>"
-  "</div>"
-
-
-  "</body>"
-  "</html>", winner
+  "      <div id=\"board-container\">\n"
+  "				<div id=\"map2\" class=\"ship-board\">\n"
+  "					<div id=\"player-name\" class=\"name-container\" style=\"min-height: 100px;\">\n"
+  "						<div style=\"display: none;\" id=\"name-input-feelings\">\n"
+  "	            <input id=\"Player2-input\" class=\"input-properties\" placeholder=\"Insira seu nome\" autocomplete=\"off\" type=\"text\">\n"
+  "							<button type=\"button\" class=\"button-dialog name-dialog\"><a class=\"fa fa-angle-right\"></a></button>\n"
+  "						</div>\n"
+  "						<div style=\"text-align: center; display: block; padding: 25px; font-size: 30px;\" class=\"player-name\">\n"
+  "							<span id=\"player2-span\" style=\"text-align: center;\">%s ganhou o jogo!!!</span>\n"
+  "						</div>\n"
+  "           <div id=\"button-container\">\n"
+  "             <a href=\"navalb.cgi\">\n"
+  "               <button type=\"sub\" class=\"button-dialog play-again\" style=\"\" >Jogar Novamente</button>\n"
+  "             </a>\n"
+  "           </div>\n"
+  "         </div>\n"
+  "        </div>\n"
+  "     </div>\n"
+  "   </div>\n"
+  "</div>\n"
+  "</body>\n"
+  "</html>\n", winner
   );
 
 }

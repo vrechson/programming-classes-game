@@ -1,5 +1,5 @@
 [username]: vrech
-[score]: 0
+[score]: 2
 [board]: POSY=0 POSX=0 PRES=C VIS=0 
 [board]: POSY=0 POSX=1 PRES=C VIS=0 
 [board]: POSY=0 POSX=2 PRES=* VIS=0 
@@ -7,7 +7,7 @@
 [board]: POSY=0 POSX=4 PRES=* VIS=0 
 [board]: POSY=0 POSX=5 PRES=* VIS=0 
 [board]: POSY=0 POSX=6 PRES=D VIS=0 
-[board]: POSY=0 POSX=7 PRES=* VIS=0 
+[board]: POSY=0 POSX=7 PRES=* VIS=1 
 [board]: POSY=0 POSX=8 PRES=* VIS=0 
 [board]: POSY=0 POSX=9 PRES=* VIS=0 
 [board]: POSY=1 POSX=0 PRES=* VIS=0 
@@ -15,7 +15,7 @@
 [board]: POSY=1 POSX=2 PRES=* VIS=0 
 [board]: POSY=1 POSX=3 PRES=* VIS=0 
 [board]: POSY=1 POSX=4 PRES=* VIS=0 
-[board]: POSY=1 POSX=5 PRES=* VIS=0 
+[board]: POSY=1 POSX=5 PRES=* VIS=1 
 [board]: POSY=1 POSX=6 PRES=D VIS=0 
 [board]: POSY=1 POSX=7 PRES=* VIS=0 
 [board]: POSY=1 POSX=8 PRES=* VIS=0 
@@ -36,7 +36,7 @@
 [board]: POSY=3 POSX=3 PRES=D VIS=0 
 [board]: POSY=3 POSX=4 PRES=* VIS=0 
 [board]: POSY=3 POSX=5 PRES=* VIS=0 
-[board]: POSY=3 POSX=6 PRES=D VIS=0 
+[board]: POSY=3 POSX=6 PRES=D VIS=1 
 [board]: POSY=3 POSX=7 PRES=S VIS=0 
 [board]: POSY=3 POSX=8 PRES=* VIS=0 
 [board]: POSY=3 POSX=9 PRES=* VIS=0 

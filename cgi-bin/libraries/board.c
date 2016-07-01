@@ -9,75 +9,31 @@
 /*
  *	Functions
  ***********************************************************************/
+
+/* initialize a user map */
 void init_map(Players *player)
 {
   int i, j;
-  for (i = 0; i < MAP_SIZE; i++)
-    for (j = 0; j < MAP_SIZE; j++) {
+  for (i = 0; i < MAP_SIZE; ++i)
+    for (j = 0; j < MAP_SIZE; ++j) {
       player->map[i][j].presentation = EMPTY;
       player->score = 0;
       player->map[i][j].isVisible = 1;
     }
 }
 
+/* hide user ships */
 void hide_ships(Players *player)
 {
   int i, j;
 
-  for (i = 0; i < MAP_SIZE; i++)
-    for (j = 0; j < MAP_SIZE; j++)
+  for (i = 0; i < MAP_SIZE; ++i)
+    for (j = 0; j < MAP_SIZE; ++j)
       player->map[i][j].isVisible = 0;
 
 }
 
-
-void get_log(Players *player, int n)
-{
-
-  int i, j, vis;
-  char filename[2][20] = {"player1.log", "player2.log"}, line[100], query[30], param[50], pres;
-  FILE *stream;
-
-  stream = fopen(filename[n], "r");
-
-  while (fgets(line, 100, stream)) {
-    if (sscanf(line, "[%[^]]]: %[^\n]", query, param)) {
-      if (strcmp(query, "username") == 0) {
-        strcpy(player->name, param);
-      } else if (strcmp(query, "board") == 0) {
-        sscanf(param, "POSY=%d POSX=%d PRES=%c VIS=%d", &i, &j, &pres, &vis);
-        player->map[i][j].presentation = pres;
-        player->map[i][j].isVisible = vis;
-      } else if (strcmp(query, "score") == 0) {
-        player->score = atoi(param);
-      }
-    }
-  }
-
-  fclose(stream);
-
-}
-
-
-void create_log(Players *player, int n, char name[])
-{
-
-  int i, j;
-  char filename[2][20] = {"player1.log", "player2.log"};
-  FILE *stream;
-
-  stream = fopen(filename[n], "w");
-
-  fprintf(stream, "[username]: %s\n", name);
-  fprintf(stream, "[score]: %d\n", player->score);
-  for (i = 0; i < MAP_SIZE; i++)
-    for(j = 0; j < MAP_SIZE; j++)
-      fprintf(stream, "[board]: POSY=%d POSX=%d PRES=%c VIS=%d \n", i, j, player->map[i][j].presentation, player->map[i][j].isVisible);
-
-  fclose(stream);
-
-}
-
+/* check disponibility of a position in the user map */
 int check_pos(int x, int y, int height, int width, int rotation, int ia, Players *player)
 {
   int i, j, aux;
@@ -100,10 +56,10 @@ int check_pos(int x, int y, int height, int width, int rotation, int ia, Players
           printf("A posição solicitada já foi ocupada por outro barco. tente uma nova posição.\n");
         return 1;
       }
-      //printf("[debug]: %d %d %d", (y + j - 1), (x + i - 1), MAP_SIZE);
   return 0;
 }
 
+/* allocate a position on the map */
 void pos_s(int x, int y, int height, int width, int rotation, char style, Players *player)
 {
   int i, j, aux;
@@ -114,13 +70,14 @@ void pos_s(int x, int y, int height, int width, int rotation, char style, Player
     width = aux;
   }
 
-  for (i = 0; i < height; i++)
-    for (j = 0; j < width; j++) {
+  for (i = 0; i < height; ++i)
+    for (j = 0; j < width; ++j) {
       player->map[x + i - 1][y + j - 1].presentation = style;
     }
 
 }
 
+/* attack a position */
 int hit_pos(int index, int x, int y)
 {
   Players player1, player2;
@@ -145,6 +102,7 @@ int hit_pos(int index, int x, int y)
   create_log(&player1, index, player1.name);
 }
 
+/* ai hit user positions */
 void ai_hit_pos()
 {
   Players player1, player2;

@@ -8,7 +8,6 @@
 #ifndef _PLAYERS_H_
 #define _PLAYERS_H_
 
-#include <stdarg.h>
 #include "definitions.h"
 #include "board.h"
 #include "web_content.h"
@@ -18,8 +17,8 @@
  ***********************************************************************/
 void build_player(int mode, int index, char name[]);
 void build_ai(Players *player,  char *name);
-void build_map(Players *player, char *name);
-void init_game();
-//Players *guess_eng(Players *player1, Players *player2, int ia);
+void get_log(Players *player, int n); /* get player logs */
+void create_log(Players *player, int n, char name[]); /* write player logs */
+void build_map(Players *player, char *name); /* generate a random map */
 
 #endif

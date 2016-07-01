@@ -18,6 +18,12 @@ $(function() {
       $("#name-input-feelings").hide();
     }
 
+    $("#Player2-input").keypress(function (e) {
+      if (e.which == 13) {
+        $("button.button-dialog:nth-child(2)").click();
+      }
+    });
+
     if ($.QueryString["mode"] && $.QueryString["mode"] > 2)
       $(".name-container > #name-input-feelings").hide();
 

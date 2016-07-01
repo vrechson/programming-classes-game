@@ -2,12 +2,12 @@
  * This file must contain all definitions concerning general configuration of the game.
  */
 
-#ifndef _DEFINITIONS_H_
-#define _DEFINITIONS_H_
-
 /*
  *	Definitions
  ***********************************************************************/
+#ifndef _DEFINITIONS_H_
+#define _DEFINITIONS_H_
+
 /* ship configurations */
 #define SUBMARINE 4 // 1 slot
 #define BATTLESHIP 3 // 4 slot
@@ -27,28 +27,34 @@
 #define AI_NAME "Mr. Robot"
 
 /* OS configurations */
+
+/* deprecated in html version
 #ifdef __unix__
   #define CLEAR "clear"
 #elif defined(_WIN32) || defined(WIN32)
   #define CLEAR "cls"
 #endif
+*/
 
 #define VERSION 1.02
 
 /*
  *	Types
  ***********************************************************************/
+
 /* game types */
 
+/* game board */
 typedef struct {
   char presentation;
   int isVisible;
 } board;
 
-typedef struct Players {
+/* game players */
+typedef struct {
     char name[50];
     int score;
-    int guess;
+    /* int guess; for future use */
     board map[MAP_SIZE][MAP_SIZE];
 } Players;
 
